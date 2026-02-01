@@ -18,7 +18,7 @@ cd ../../..
 
 # Course 2: RTK Query
 echo "📦 Installing dependencies for RTK Query..."
-cd courses/02-rtk-query/project
+cd courses/02-redux-rtk-query/project
 npm install
 cd ../review-engine
 npm install
@@ -36,7 +36,7 @@ cd ../../..
 echo "🎭 Installing Playwright browsers..."
 cd courses/01-react-fundamentals/project
 npx playwright install chromium
-cd ../../02-rtk-query/project
+cd ../../02-redux-rtk-query/project
 npx playwright install chromium
 cd ../../03-nextjs-app-router/project
 npx playwright install chromium

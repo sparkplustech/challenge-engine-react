@@ -1,0 +1,9 @@
+{
+  "challengeId": "01-store-setup",
+  "challengeName": "Store Setup with configureStore",
+  "difficulty": "beginner",
+  "estimatedTime": "30 min",
+  "filesToCheck": ["src/store/store.ts", "src/main.tsx"],
+  "skills": ["Redux", "Redux Toolkit", "configureStore", "Provider"],
+  "patternsRequired": ["configureStore", "Provider"]
+}

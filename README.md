@@ -106,7 +106,7 @@ npm run dev
 Or for other courses:
 
 ```bash
-cd courses/02-rtk-query/project && npm run dev
+cd courses/02-redux-rtk-query/project && npm run dev
 cd courses/03-nextjs-app-router/project && npm run dev
 ```
 
@@ -312,22 +312,23 @@ Each challenge is scored by:
 
 
 
+
 ## 📈 Progress Summary
 
-**Last updated:** 2/1/2026, 3:21:10 PM
+**Last updated:** 2/1/2026, 8:57:59 PM
 
 ### Pathway
 
 | Metric | Value |
 |--------|-------|
-| Challenges completed | 0 / 29 (0%) |
-| Overall score | 0% |
+| Challenges completed | 1 / 38 (2.6%) |
+| Overall score | 28.1% |
 
 ### By course
 
 | Course | Completed | Score | Status |
 |--------|-----------|-------|--------|
 | React Fundamentals | 0/23 (0%) | 0% | Pass |
-| RTK Query | 0/3 (0%) | 0% | Pass |
+| Redux & RTK Query | 1/12 (0.1%) | 85% | Pass |
 | Next.js App Router | 0/3 (0%) | 0% | Pass |
 

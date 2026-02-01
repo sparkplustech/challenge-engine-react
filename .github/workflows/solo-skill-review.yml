@@ -43,7 +43,7 @@ jobs:
         run: npm ci
 
       - name: Install dependencies (Course 2)
-        working-directory: courses/02-rtk-query/project
+        working-directory: courses/02-redux-rtk-query/project
         run: npm ci
 
       - name: Install dependencies (Course 3)
@@ -55,7 +55,7 @@ jobs:
         run: npm ci
 
       - name: Install review engine dependencies (Course 2)
-        working-directory: courses/02-rtk-query/review-engine
+        working-directory: courses/02-redux-rtk-query/review-engine
         run: npm ci
 
       - name: Install review engine dependencies (Course 3)
@@ -67,7 +67,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Install Playwright browsers (Course 2)
-        working-directory: courses/02-rtk-query/project
+        working-directory: courses/02-redux-rtk-query/project
         run: npx playwright install --with-deps chromium
 
       - name: Install Playwright browsers (Course 3)

@@ -1,0 +1,9 @@
+{
+  "challengeId": "08-caching-refetch",
+  "challengeName": "Caching and Cache Tags",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 hour",
+  "filesToCheck": ["src/api/apiSlice.ts"],
+  "skills": ["RTK Query", "providesTags", "invalidatesTags", "cache invalidation"],
+  "patternsRequired": ["providesTags", "invalidatesTags"]
+}

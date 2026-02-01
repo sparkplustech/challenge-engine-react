@@ -1,0 +1,9 @@
+{
+  "challengeId": "11-api-local-state",
+  "challengeName": "API and Local State Together",
+  "difficulty": "intermediate",
+  "estimatedTime": "1.5 hours",
+  "filesToCheck": ["src/store/store.ts", "src/store/slices/filtersSlice.ts", "src/components/PostsWithFilters.tsx"],
+  "skills": ["Redux", "RTK Query", "slice + API in one store", "filtering/sorting"],
+  "patternsRequired": ["useSelector", "useGetPostsQuery"]
+}

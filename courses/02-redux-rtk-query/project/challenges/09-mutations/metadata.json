@@ -1,0 +1,9 @@
+{
+  "challengeId": "09-mutations",
+  "challengeName": "Mutations with useMutation",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 hour",
+  "filesToCheck": ["src/api/apiSlice.ts", "src/components/AddPostForm.tsx"],
+  "skills": ["RTK Query", "builder.mutation", "useMutation", "POST/PUT/DELETE"],
+  "patternsRequired": ["builder.mutation", "useMutation"]
+}

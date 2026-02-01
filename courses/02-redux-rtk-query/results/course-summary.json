@@ -1,0 +1,22 @@
+{
+  "courseId": "02-redux-rtk-query",
+  "courseName": "Redux & RTK Query",
+  "lastUpdated": "2026-02-01T15:27:59.062Z",
+  "totalChallenges": 12,
+  "completedChallenges": 1,
+  "averageScore": 85,
+  "completionPercentage": 8.3,
+  "badgeLevel": "none",
+  "challengeResults": [
+    {
+      "challengeId": "01-store-setup",
+      "challengeName": "Store Setup with configureStore",
+      "score": 85,
+      "passed": true
+    }
+  ],
+  "skillStrengths": [
+    "Store Setup with configureStore"
+  ],
+  "improvementAreas": []
+}

@@ -1,0 +1,9 @@
+{
+  "challengeId": "06-rtk-query-setup",
+  "challengeName": "RTK Query Setup and API Slice",
+  "difficulty": "intermediate",
+  "estimatedTime": "45 min",
+  "filesToCheck": ["src/store/store.ts", "src/api/apiSlice.ts"],
+  "skills": ["RTK Query", "createApi", "fetchBaseQuery", "API reducer and middleware"],
+  "patternsRequired": ["createApi", "fetchBaseQuery"]
+}

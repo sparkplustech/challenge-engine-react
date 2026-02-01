@@ -12,7 +12,7 @@ call npm run review || echo ⚠️  Review failed (may need dependencies install
 REM Review Course 2
 echo.
 echo 📚 Reviewing RTK Query...
-cd ..\..\02-rtk-query\project
+cd ..\..\02-redux-rtk-query\project
 call npm run review || echo ⚠️  Review failed (may need dependencies installed)
 
 REM Review Course 3

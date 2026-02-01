@@ -1,0 +1,6 @@
+{
+  "name": "rtk-query-ai-review",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AI review integration for RTK Query course"
+}

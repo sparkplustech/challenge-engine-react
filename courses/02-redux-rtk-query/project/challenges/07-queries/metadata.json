@@ -1,0 +1,9 @@
+{
+  "challengeId": "07-queries",
+  "challengeName": "Query Endpoints and useQuery Hooks",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 hour",
+  "filesToCheck": ["src/api/apiSlice.ts", "src/components/UsersList.tsx"],
+  "skills": ["RTK Query", "useGetUsersQuery", "loading", "error", "data"],
+  "patternsRequired": ["useGetUsersQuery", "builder.query"]
+}

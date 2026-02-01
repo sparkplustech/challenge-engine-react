@@ -1,0 +1,9 @@
+{
+  "challengeId": "03-reading-dispatching",
+  "challengeName": "Reading and Dispatching in Components",
+  "difficulty": "beginner",
+  "estimatedTime": "45 min",
+  "filesToCheck": ["src/store/hooks.ts", "src/components/CounterView.tsx"],
+  "skills": ["React-Redux", "useSelector", "useDispatch", "typed hooks"],
+  "patternsRequired": ["useSelector", "useDispatch"]
+}

@@ -1,0 +1,9 @@
+{
+  "challengeId": "10-optimistic-updates",
+  "challengeName": "Optimistic Updates",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 hour",
+  "filesToCheck": ["src/api/apiSlice.ts"],
+  "skills": ["RTK Query", "optimistic updates", "onQueryStarted", "rollback"],
+  "patternsRequired": ["onQueryStarted", "queryFulfilled"]
+}

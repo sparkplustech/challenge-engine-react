@@ -17,7 +17,7 @@ npm run review || echo "⚠️  Review failed (may need dependencies installed)"
 # Review Course 2
 echo ""
 echo "📚 Reviewing RTK Query..."
-cd "$ROOT_DIR/courses/02-rtk-query/project"
+cd "$ROOT_DIR/courses/02-redux-rtk-query/project"
 npm run review || echo "⚠️  Review failed (may need dependencies installed)"
 
 # Review Course 3

@@ -1,0 +1,9 @@
+{
+  "challengeId": "02-first-slice",
+  "challengeName": "First Slice with createSlice",
+  "difficulty": "beginner",
+  "estimatedTime": "45 min",
+  "filesToCheck": ["src/store/store.ts", "src/store/slices/counterSlice.ts"],
+  "skills": ["Redux Toolkit", "createSlice", "reducers", "actions"],
+  "patternsRequired": ["createSlice", "reducers"]
+}

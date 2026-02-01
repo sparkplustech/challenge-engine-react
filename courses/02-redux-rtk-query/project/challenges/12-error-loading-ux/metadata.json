@@ -1,0 +1,9 @@
+{
+  "challengeId": "12-error-loading-ux",
+  "challengeName": "Error and Loading UX",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 hour",
+  "filesToCheck": ["src/components/UsersList.tsx", "src/components/ErrorDisplay.tsx"],
+  "skills": ["RTK Query", "loading state", "error state", "retry", "UX"],
+  "patternsRequired": ["isLoading", "isError", "refetch"]
+}

@@ -1,0 +1,32 @@
+{
+  "courseId": "02-redux-rtk-query",
+  "courseName": "Redux & RTK Query",
+  "description": "Redux, Redux Toolkit, and RTK Query for state and API—from fundamentals to real use cases",
+  "version": "1.0.0",
+  "challenges": [
+    { "id": "01-store-setup", "name": "Store Setup with configureStore", "weight": 0.083 },
+    { "id": "02-first-slice", "name": "First Slice with createSlice", "weight": 0.084 },
+    { "id": "03-reading-dispatching", "name": "Reading and Dispatching in Components", "weight": 0.084 },
+    { "id": "04-multiple-slices", "name": "Multiple Slices in the Store", "weight": 0.084 },
+    { "id": "05-async-thunks", "name": "Async Logic with createAsyncThunk", "weight": 0.084 },
+    { "id": "06-rtk-query-setup", "name": "RTK Query Setup and API Slice", "weight": 0.084 },
+    { "id": "07-queries", "name": "Query Endpoints and useQuery Hooks", "weight": 0.084 },
+    { "id": "08-caching-refetch", "name": "Caching and Cache Tags", "weight": 0.084 },
+    { "id": "09-mutations", "name": "Mutations with useMutation", "weight": 0.084 },
+    { "id": "10-optimistic-updates", "name": "Optimistic Updates", "weight": 0.084 },
+    { "id": "11-api-local-state", "name": "API and Local State Together", "weight": 0.084 },
+    { "id": "12-error-loading-ux", "name": "Error and Loading UX", "weight": 0.085 }
+  ],
+  "scoring": {
+    "functionalTests": 0.35,
+    "codeQuality": 0.15,
+    "architecture": 0.10,
+    "bestPractices": 0.10,
+    "e2eTests": 0.15,
+    "aiReview": 0.15
+  },
+  "requirements": {
+    "minScore": 80,
+    "minCompletion": 100
+  }
+}

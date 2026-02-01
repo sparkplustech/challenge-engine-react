@@ -1,0 +1,9 @@
+{
+  "challengeId": "05-async-thunks",
+  "challengeName": "Async Logic with createAsyncThunk",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 hour",
+  "filesToCheck": ["src/store/slices/usersSlice.ts", "src/store/store.ts"],
+  "skills": ["Redux Toolkit", "createAsyncThunk", "extraReducers", "pending/fulfilled/rejected"],
+  "patternsRequired": ["createAsyncThunk", "extraReducers"]
+}

@@ -9,8 +9,8 @@
       "required": true
     },
     {
-      "id": "02-rtk-query",
-      "name": "RTK Query",
+      "id": "02-redux-rtk-query",
+      "name": "Redux & RTK Query",
       "weight": 0.33,
       "required": true
     },

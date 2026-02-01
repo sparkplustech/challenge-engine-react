@@ -1,0 +1,9 @@
+{
+  "challengeId": "04-multiple-slices",
+  "challengeName": "Multiple Slices in the Store",
+  "difficulty": "beginner",
+  "estimatedTime": "45 min",
+  "filesToCheck": ["src/store/store.ts", "src/store/slices/counterSlice.ts", "src/store/slices/uiSlice.ts"],
+  "skills": ["Redux", "multiple reducers", "slice per domain"],
+  "patternsRequired": ["createSlice", "configureStore"]
+}

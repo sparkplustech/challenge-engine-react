@@ -68,7 +68,7 @@ Challenge-Engine/
 │   │       ├── challenge-results.json
 │   │       ├── course-summary.json
 │   │       └── ai-feedback.json
-│   ├── 02-rtk-query/                # Same structure
+│   ├── 02-redux-rtk-query/          # Same structure
 │   └── 03-nextjs-app-router/       # Same structure
 │
 ├── global-review/                   # Pathway-level aggregation

@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-02-01T09:51:10.496Z",
+  "lastUpdated": "2026-02-01T15:27:59.125Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 0,
-    "completionPercentage": 0,
+    "overallScore": 28.1,
+    "completionPercentage": 2.6,
     "badgeLevel": "none",
-    "totalChallenges": 29,
-    "completedChallenges": 0
+    "totalChallenges": 38,
+    "completedChallenges": 1
   },
   "courses": {
     "01-react-fundamentals": {
@@ -20,15 +20,31 @@
       "completedChallenges": 0,
       "challenges": {}
     },
-    "02-rtk-query": {
-      "courseId": "02-rtk-query",
-      "courseName": "RTK Query",
-      "averageScore": 0,
-      "completionPercentage": 0,
+    "02-redux-rtk-query": {
+      "courseId": "02-redux-rtk-query",
+      "courseName": "Redux & RTK Query",
+      "averageScore": 85,
+      "completionPercentage": 8.3,
       "badgeLevel": "none",
-      "totalChallenges": 3,
-      "completedChallenges": 0,
-      "challenges": {}
+      "totalChallenges": 12,
+      "completedChallenges": 1,
+      "challenges": {
+        "01-store-setup": {
+          "challengeId": "01-store-setup",
+          "challengeName": "Store Setup with configureStore",
+          "passed": true,
+          "score": 85,
+          "lastRun": "2026-02-01T15:27:42.870Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 100,
+            "architecture": 100,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 0
+          }
+        }
+      }
     },
     "03-nextjs-app-router": {
       "courseId": "03-nextjs-app-router",
