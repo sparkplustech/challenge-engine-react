@@ -2,7 +2,7 @@
   {
     "challengeId": "01-store-setup",
     "challengeName": "Store Setup with configureStore",
-    "timestamp": "2026-02-01T15:27:42.870Z",
+    "timestamp": "2026-02-01T15:40:28.954Z",
     "scores": {
       "functionalTests": 100,
       "codeQuality": 100,
@@ -32,7 +32,7 @@
               "fullName": " Challenge 01: Store Setup with configureStore store uses configureStore",
               "status": "passed",
               "title": "store uses configureStore",
-              "duration": 1,
+              "duration": 2,
               "failureMessages": []
             },
             {
@@ -54,12 +54,12 @@
               "fullName": " Challenge 01: Store Setup with configureStore main.tsx wraps App with Provider and passes store",
               "status": "passed",
               "title": "main.tsx wraps App with Provider and passes store",
-              "duration": 0,
+              "duration": 1,
               "failureMessages": []
             }
           ],
-          "startTime": 1769959665520,
-          "endTime": 1769959665522,
+          "startTime": 1769960432168,
+          "endTime": 1769960432172,
           "status": "passed",
           "message": "",
           "name": "D:/Workspace/Projects/SOLO/Challenge-Engine/courses/02-redux-rtk-query/project/tests/challenge-01.test.tsx"
@@ -190,12 +190,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 458,
+                          "duration": 596,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-02-01T15:27:53.762Z",
+                          "startTime": "2026-02-01T15:40:43.120Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -224,12 +224,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 254,
+                          "duration": 405,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-02-01T15:27:55.572Z",
+                          "startTime": "2026-02-01T15:40:43.909Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -251,7 +251,7 @@
     },
     "aiReviewResults": {
       "challengeId": "01-store-setup",
-      "timestamp": "2026-02-01T15:27:56.408Z",
+      "timestamp": "2026-02-01T15:40:44.926Z",
       "score": 0,
       "feedback": [],
       "strengths": [],
@@ -263,7 +263,7 @@
     },
     "aiResults": {
       "challengeId": "01-store-setup",
-      "timestamp": "2026-02-01T15:27:56.408Z",
+      "timestamp": "2026-02-01T15:40:44.926Z",
       "score": 0,
       "feedback": [],
       "strengths": [],

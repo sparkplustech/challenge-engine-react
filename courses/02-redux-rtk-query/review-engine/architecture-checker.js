@@ -168,7 +168,9 @@ function checkFileForPatterns(content, patternsRequired, fileName) {
     for (const pattern of patternsRequired) {
       const astName = patternAliases[pattern] || pattern;
       const foundByAst = foundPatterns.has(astName);
-      const foundByString = content.includes(pattern);
+      let foundByString = content.includes(pattern);
+      if (!foundByString && pattern === 'useSelector') foundByString = content.includes('useAppSelector');
+      if (!foundByString && pattern === 'useMutation') foundByString = content.includes('useAddPostMutation') || content.includes('useMutation');
       if (foundByAst || foundByString) {
         patternsFound.push(pattern);
       } else {

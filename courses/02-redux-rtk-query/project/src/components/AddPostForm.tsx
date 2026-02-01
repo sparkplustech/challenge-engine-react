@@ -4,7 +4,9 @@
 export default function AddPostForm() {
   return (
     <form data-testid="add-post-form" id="add-post-form">
-      <button type="submit" data-testid="add-post-submit">Add Post</button>
+      <button type="submit" data-testid="add-post-submit">
+        Add Post
+      </button>
     </form>
   )
 }

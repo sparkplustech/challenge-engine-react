@@ -10,7 +10,9 @@ export default function ErrorDisplay({ error, onRetry }: ErrorDisplayProps) {
   return (
     <div data-testid="error-display" id="error-display">
       {error != null && <p>{String(error)}</p>}
-      <button type="button" data-testid="retry-btn" onClick={onRetry}>Retry</button>
+      <button type="button" data-testid="retry-btn" onClick={onRetry}>
+        Retry
+      </button>
     </div>
   )
 }
