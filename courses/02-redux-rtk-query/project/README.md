@@ -57,28 +57,28 @@ npm run review -- --challenge=01-store-setup
 
 ## 📊 Progress Evidence
 
-*Auto-updated when you run review. Last run: 2/2/2026, 3:33:42 AM*
+*Auto-updated when you run review. Last run: 2/3/2026, 9:05:35 PM*
 
 | Metric | Value |
 |--------|-------|
-| Challenges completed | 13 / 13 (100%) |
-| Average score | 90% |
+| Challenges completed | 0 / 13 (0%) |
+| Average score | 0% |
 
 | Challenge | Skills covered | Status |
 |-----------|----------------|--------|
-| Store Setup with configureStore | Redux, Redux Toolkit, configureStore, Provider | Passed |
-| First Slice with createSlice | Redux Toolkit, createSlice, reducers, actions | Passed |
-| Reading and Dispatching in Components | React-Redux, useSelector, useDispatch, typed hooks | Passed |
-| Multiple Slices in the Store | Redux, multiple reducers, slice per domain | Passed |
-| Async Logic with createAsyncThunk | Redux Toolkit, createAsyncThunk, extraReducers, pending/fulfilled/rejected | Passed |
-| RTK Query Setup and API Slice | RTK Query, createApi, fetchBaseQuery, API reducer and middleware | Passed |
-| Query Endpoints and useQuery Hooks | RTK Query, useGetUsersQuery, loading, error, data | Passed |
-| Caching and Cache Tags | RTK Query, providesTags, invalidatesTags, cache invalidation | Passed |
-| Mutations with useMutation | RTK Query, builder.mutation, useMutation, POST/PUT/DELETE | Passed |
-| Optimistic Updates | RTK Query, optimistic updates, onQueryStarted, rollback | Passed |
-| API and Local State Together | Redux, RTK Query, slice + API in one store, filtering/sorting | Passed |
-| Error and Loading UX | RTK Query, loading state, error state, retry, UX | Passed |
-| Query with Parameters and Detail View | RTK Query, parameterized query, getPostById, useGetPostByIdQuery, skip option, detail view | Passed |
+| Store Setup with configureStore | Redux, Redux Toolkit, configureStore, Provider | — |
+| First Slice with createSlice | Redux Toolkit, createSlice, reducers, actions | — |
+| Reading and Dispatching in Components | React-Redux, useSelector, useDispatch, typed hooks | — |
+| Multiple Slices in the Store | Redux, multiple reducers, slice per domain | — |
+| Async Logic with createAsyncThunk | Redux Toolkit, createAsyncThunk, extraReducers, pending/fulfilled/rejected | — |
+| RTK Query Setup and API Slice | RTK Query, createApi, fetchBaseQuery, API reducer and middleware | — |
+| Query Endpoints and useQuery Hooks | RTK Query, useGetUsersQuery, loading, error, data | — |
+| Caching and Cache Tags | RTK Query, providesTags, invalidatesTags, cache invalidation | — |
+| Mutations with useMutation | RTK Query, builder.mutation, useMutation, POST/PUT/DELETE | — |
+| Optimistic Updates | RTK Query, optimistic updates, onQueryStarted, rollback | — |
+| API and Local State Together | Redux, RTK Query, slice + API in one store, filtering/sorting | — |
+| Error and Loading UX | RTK Query, loading state, error state, retry, UX | — |
+| Query with Parameters and Detail View | RTK Query, parameterized query, getPostById, useGetPostByIdQuery, skip option, detail view | — |
 
 ## 📋 Challenge Workflow
 
