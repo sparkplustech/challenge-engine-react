@@ -167,6 +167,7 @@ function checkFileForPatterns(content, patternsRequired, fileName) {
     const patternAliases = {
       useGetUsersQuery: 'useQueryHook',
       useGetPostsQuery: 'useQueryHook',
+      useGetPostByIdQuery: 'useQueryHook',
       useMutation: 'useMutationHook',
       'builder.query': 'endpoints',
       'builder.mutation': 'mutation',
@@ -178,6 +179,7 @@ function checkFileForPatterns(content, patternsRequired, fileName) {
       if (!foundByString && pattern === 'useSelector') foundByString = content.includes('useAppSelector');
       if (!foundByString && pattern === 'useMutation') foundByString = content.includes('useAddPostMutation') || content.includes('useMutation');
       if (!foundByString && pattern === 'useGetPostsQuery') foundByString = content.includes('useGetPostsQuery');
+      if (!foundByString && pattern === 'useGetPostByIdQuery') foundByString = content.includes('useGetPostByIdQuery');
       if (foundByAst || foundByString) {
         patternsFound.push(pattern);
       } else {
@@ -192,6 +194,7 @@ function checkFileForPatterns(content, patternsRequired, fileName) {
       if (!found && pattern === 'useSelector') found = content.includes('useAppSelector');
       if (!found && pattern === 'useMutation') found = content.includes('useAddPostMutation');
       if (!found && pattern === 'useGetPostsQuery') found = content.includes('useGetPostsQuery');
+      if (!found && pattern === 'useGetPostByIdQuery') found = content.includes('useGetPostByIdQuery');
       if (found) {
         patternsFound.push(pattern);
       } else {

@@ -1,0 +1,9 @@
+{
+  "challengeId": "15-redux-toolkit-with-nextjs",
+  "challengeName": "Redux Toolkit with Next.js",
+  "difficulty": "intermediate",
+  "estimatedTime": "1.5 - 2 hours",
+  "skills": ["Redux Toolkit", "configureStore", "Provider", "useSelector", "useDispatch"],
+  "filesToCheck": ["app/store/store.ts", "app/providers/StoreProvider.tsx", "app/layout.tsx"],
+  "patternsRequired": ["configureStore", "Provider", "useSelector", "useDispatch"]
+}

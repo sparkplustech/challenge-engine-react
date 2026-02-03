@@ -1,0 +1,9 @@
+{
+  "challengeId": "08-ssr-dynamic-rendering",
+  "challengeName": "SSR (Server-Side Rendering)",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 - 1.5 hours",
+  "skills": ["SSR", "force-dynamic", "cache: no-store", "Server-side rendering"],
+  "filesToCheck": ["app/posts/page.tsx", "app/dashboard/page.tsx"],
+  "patternsRequired": ["forceDynamic", "cacheNoStore"]
+}

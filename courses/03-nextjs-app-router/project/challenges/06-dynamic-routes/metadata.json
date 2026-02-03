@@ -1,0 +1,9 @@
+{
+  "challengeId": "06-dynamic-routes",
+  "challengeName": "Dynamic Routes",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 - 1.5 hours",
+  "skills": ["Dynamic Routes", "[id]", "params", "generateStaticParams"],
+  "filesToCheck": ["app/posts/[id]/page.tsx"],
+  "patternsRequired": ["dynamicSegment", "params"]
+}

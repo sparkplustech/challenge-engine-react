@@ -1,0 +1,9 @@
+{
+  "challengeId": "07-static-and-dynamic-rendering",
+  "challengeName": "Static and Dynamic Rendering",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 hour",
+  "skills": ["Static Rendering", "Dynamic Rendering", "force-static", "force-dynamic"],
+  "filesToCheck": ["app/page.tsx", "app/posts/page.tsx"],
+  "patternsRequired": ["dynamicExport", "forceStaticOrDynamic"]
+}

@@ -1,0 +1,9 @@
+{
+  "challengeId": "10-caching-and-revalidating",
+  "challengeName": "Caching and Revalidating",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 - 1.5 hours",
+  "skills": ["fetch cache", "revalidate", "revalidatePath", "revalidateTag"],
+  "filesToCheck": ["app/posts/page.tsx", "app/actions.ts"],
+  "patternsRequired": ["fetchCache", "revalidate"]
+}

@@ -14,13 +14,14 @@ const CHALLENGES = [
   { id: '10-optimistic-updates', name: 'Optimistic Updates', difficulty: 'Intermediate', description: 'Optimistic cache update and rollback', route: '/challenge/10-optimistic-updates' },
   { id: '11-api-local-state', name: 'API and Local State Together', difficulty: 'Intermediate', description: 'Filter/sort slice + RTK Query list', route: '/challenge/11-api-local-state' },
   { id: '12-error-loading-ux', name: 'Error and Loading UX', difficulty: 'Intermediate', description: 'ErrorDisplay, refetch, loading indicators', route: '/challenge/12-error-loading-ux' },
+  { id: '13-query-parameters', name: 'Query with Parameters and Detail View', difficulty: 'Intermediate', description: 'getPostById, useGetPostByIdQuery, skip option, detail view', route: '/challenge/13-query-parameters' },
 ]
 
 export default function ChallengeList() {
   return (
     <div className="challenge-list">
       <h2>Redux & RTK Query Challenges</h2>
-      <p>Complete challenges 01–12 in sequence.</p>
+      <p>Complete challenges 01–13 in sequence.</p>
       <div className="challenges-grid">
         {CHALLENGES.map(challenge => (
           <div key={challenge.id} className="challenge-card">

@@ -36,6 +36,7 @@ Do challenges **in order, one at a time**: read the first challenge README, solv
 - **Challenge 10**: `challenges/10-optimistic-updates/README.md` — Optimistic Updates
 - **Challenge 11**: `challenges/11-api-local-state/README.md` — API and Local State Together
 - **Challenge 12**: `challenges/12-error-loading-ux/README.md` — Error and Loading UX
+- **Challenge 13**: `challenges/13-query-parameters/README.md` — Query with Parameters and Detail View
 
 ### 4. Verify Your Work
 
@@ -56,12 +57,12 @@ npm run review -- --challenge=01-store-setup
 
 ## 📊 Progress Evidence
 
-*Auto-updated when you run review. Last run: 2/2/2026, 3:26:51 AM*
+*Auto-updated when you run review. Last run: 2/2/2026, 3:33:42 AM*
 
 | Metric | Value |
 |--------|-------|
-| Challenges completed | 12 / 12 (100%) |
-| Average score | 89.3% |
+| Challenges completed | 13 / 13 (100%) |
+| Average score | 90% |
 
 | Challenge | Skills covered | Status |
 |-----------|----------------|--------|
@@ -77,6 +78,7 @@ npm run review -- --challenge=01-store-setup
 | Optimistic Updates | RTK Query, optimistic updates, onQueryStarted, rollback | Passed |
 | API and Local State Together | Redux, RTK Query, slice + API in one store, filtering/sorting | Passed |
 | Error and Loading UX | RTK Query, loading state, error state, retry, UX | Passed |
+| Query with Parameters and Detail View | RTK Query, parameterized query, getPostById, useGetPostByIdQuery, skip option, detail view | Passed |
 
 ## 📋 Challenge Workflow
 

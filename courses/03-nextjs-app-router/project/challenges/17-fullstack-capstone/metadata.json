@@ -1,0 +1,9 @@
+{
+  "challengeId": "17-fullstack-capstone",
+  "challengeName": "Fullstack Capstone",
+  "difficulty": "advanced",
+  "estimatedTime": "2 - 3 hours",
+  "skills": ["Dynamic routes", "Server Components", "Client Components", "Error handling", "Metadata", "Server Actions"],
+  "filesToCheck": ["app/posts/[id]/page.tsx", "app/posts/error.tsx", "app/not-found.tsx"],
+  "patternsRequired": ["dynamicSegment", "useClient", "notFound", "metadata"]
+}

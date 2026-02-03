@@ -1,0 +1,9 @@
+{
+  "challengeId": "05-loading-and-streaming",
+  "challengeName": "Loading and Streaming",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 - 1.5 hours",
+  "skills": ["loading.tsx", "Streaming", "Suspense", "Loading UI"],
+  "filesToCheck": ["app/posts/loading.tsx", "app/posts/page.tsx"],
+  "patternsRequired": ["loadingTsx", "Suspense"]
+}

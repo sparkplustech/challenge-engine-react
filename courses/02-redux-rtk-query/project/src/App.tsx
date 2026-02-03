@@ -6,6 +6,14 @@ import UsersList from './components/UsersList'
 import PostsList from './components/PostsList'
 import AddPostForm from './components/AddPostForm'
 import PostsWithFilters from './components/PostsWithFilters'
+import PostDetail from './components/PostDetail'
+
+const CHALLENGE_SLUGS: Record<number, string> = {
+  1: 'store-setup', 2: 'first-slice', 3: 'reading-dispatching', 4: 'multiple-slices',
+  5: 'async-thunks', 6: 'rtk-query-setup', 7: 'queries', 8: 'caching-refetch',
+  9: 'mutations', 10: 'optimistic-updates', 11: 'api-local-state', 12: 'error-loading-ux',
+  13: 'query-parameters',
+}
 
 function App() {
   return (
@@ -16,8 +24,8 @@ function App() {
           <p>Complete the challenges in sequence.</p>
           <nav style={{ marginTop: '1rem' }}>
             <Link to="/" style={{ margin: '0 0.5rem', color: 'inherit' }}>Home</Link>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(n => (
-              <Link key={n} to={`/challenge/${String(n).padStart(2, '0')}-${n === 1 ? 'store-setup' : n === 2 ? 'first-slice' : n === 3 ? 'reading-dispatching' : n === 4 ? 'multiple-slices' : n === 5 ? 'async-thunks' : n === 6 ? 'rtk-query-setup' : n === 7 ? 'queries' : n === 8 ? 'caching-refetch' : n === 9 ? 'mutations' : n === 10 ? 'optimistic-updates' : n === 11 ? 'api-local-state' : 'error-loading-ux'}`} style={{ margin: '0 0.5rem', color: 'inherit' }}>Ch{n}</Link>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(n => (
+              <Link key={n} to={`/challenge/${String(n).padStart(2, '0')}-${CHALLENGE_SLUGS[n]}`} style={{ margin: '0 0.5rem', color: 'inherit' }}>Ch{n}</Link>
             ))}
           </nav>
         </header>
@@ -36,6 +44,8 @@ function App() {
             <Route path="/challenge/10-optimistic-updates" element={<div id="challenge-10" style={{ padding: '2rem' }}><h2>Challenge 10: Optimistic Updates</h2><p>Implement optimistic update in API slice per README.</p></div>} />
             <Route path="/challenge/11-api-local-state" element={<div style={{ padding: '2rem' }}><h2>Challenge 11: API and Local State</h2><PostsWithFilters /></div>} />
             <Route path="/challenge/12-error-loading-ux" element={<div style={{ padding: '2rem' }}><h2>Challenge 12: Error and Loading UX</h2><UsersList /></div>} />
+            <Route path="/challenge/13-query-parameters" element={<div id="challenge-13" style={{ padding: '2rem' }}><h2>Challenge 13: Query with Parameters</h2><PostDetail /></div>} />
+            <Route path="/challenge/13-query-parameters/:postId" element={<div id="challenge-13" style={{ padding: '2rem' }}><h2>Challenge 13: Query with Parameters</h2><PostDetail /></div>} />
           </Routes>
         </main>
       </div>

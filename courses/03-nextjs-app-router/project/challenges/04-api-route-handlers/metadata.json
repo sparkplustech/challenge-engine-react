@@ -1,0 +1,9 @@
+{
+  "challengeId": "04-api-route-handlers",
+  "challengeName": "API Route Handlers",
+  "difficulty": "beginner",
+  "estimatedTime": "1 hour",
+  "skills": ["Route Handlers", "app/api", "GET", "POST", "Response.json"],
+  "filesToCheck": ["app/api/posts/route.ts"],
+  "patternsRequired": ["routeHandler", "GET", "ResponseJson"]
+}

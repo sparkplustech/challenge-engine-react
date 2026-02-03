@@ -1,33 +1,94 @@
 {
-  "lastUpdated": "2026-02-01T21:56:51.189Z",
+  "lastUpdated": "2026-02-03T07:16:55.039Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 29.5,
-    "completionPercentage": 31.6,
+    "overallScore": 60.2,
+    "completionPercentage": 30.2,
     "badgeLevel": "none",
-    "totalChallenges": 38,
-    "completedChallenges": 12
+    "totalChallenges": 53,
+    "completedChallenges": 16
   },
   "courses": {
     "01-react-fundamentals": {
       "courseId": "01-react-fundamentals",
       "courseName": "React Fundamentals",
-      "averageScore": 0,
-      "completionPercentage": 0,
+      "averageScore": 92.4,
+      "completionPercentage": 13,
       "badgeLevel": "none",
       "totalChallenges": 23,
-      "completedChallenges": 0,
-      "challenges": {}
+      "completedChallenges": 3,
+      "challenges": {
+        "01-static-task-display": {
+          "challengeId": "01-static-task-display",
+          "challengeName": "Static Task Display",
+          "passed": true,
+          "score": 98.2,
+          "lastRun": "2026-02-02T20:17:37.496Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 100,
+            "architecture": 100,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 88
+          }
+        },
+        "02-dynamic-task-rendering": {
+          "challengeId": "02-dynamic-task-rendering",
+          "challengeName": "Dynamic Task Rendering",
+          "passed": true,
+          "score": 98.2,
+          "lastRun": "2026-02-02T20:11:31.507Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 100,
+            "architecture": 100,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 88
+          }
+        },
+        "03-adding-new-tasks": {
+          "challengeId": "03-adding-new-tasks",
+          "challengeName": "Adding New Tasks",
+          "passed": true,
+          "score": 98.2,
+          "lastRun": "2026-02-02T20:11:51.527Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 100,
+            "architecture": 100,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 88
+          }
+        },
+        "04-task-completion-toggle": {
+          "challengeId": "04-task-completion-toggle",
+          "challengeName": "Task Completion Toggle",
+          "passed": false,
+          "score": 74.855,
+          "lastRun": "2026-02-03T07:16:38.808Z",
+          "scores": {
+            "functionalTests": 33.3,
+            "codeQuality": 100,
+            "architecture": 100,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 88
+          }
+        }
+      }
     },
     "02-redux-rtk-query": {
       "courseId": "02-redux-rtk-query",
       "courseName": "Redux & RTK Query",
-      "averageScore": 89.3,
+      "averageScore": 90,
       "completionPercentage": 100,
       "badgeLevel": "silver",
-      "totalChallenges": 12,
-      "completedChallenges": 12,
+      "totalChallenges": 13,
+      "completedChallenges": 13,
       "challenges": {
         "01-store-setup": {
           "challengeId": "01-store-setup",
@@ -208,6 +269,21 @@
             "e2eTests": 100,
             "aiReview": 0
           }
+        },
+        "13-query-parameters": {
+          "challengeId": "13-query-parameters",
+          "challengeName": "Query with Parameters and Detail View",
+          "passed": true,
+          "score": 97.9,
+          "lastRun": "2026-02-01T22:03:26.750Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 100,
+            "architecture": 100,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 86
+          }
         }
       }
     },
@@ -217,7 +293,7 @@
       "averageScore": 0,
       "completionPercentage": 0,
       "badgeLevel": "none",
-      "totalChallenges": 3,
+      "totalChallenges": 17,
       "completedChallenges": 0,
       "challenges": {}
     }

@@ -1,0 +1,9 @@
+{
+  "challengeId": "13-query-parameters",
+  "challengeName": "Query with Parameters and Detail View",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 hour",
+  "filesToCheck": ["src/api/apiSlice.ts", "src/components/PostDetail.tsx"],
+  "skills": ["RTK Query", "parameterized query", "getPostById", "useGetPostByIdQuery", "skip option", "detail view"],
+  "patternsRequired": ["getPostById", "useGetPostByIdQuery"]
+}

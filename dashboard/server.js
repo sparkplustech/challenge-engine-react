@@ -9,7 +9,7 @@ import cors from 'cors';
 import { readFileSync, existsSync } from 'fs';
 import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { execSync } from 'child_process';
+import { spawn } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,6 +19,24 @@ let ROOT = resolve(join(__dirname, '..'));
 if (!existsSync(join(ROOT, 'courses'))) {
   ROOT = resolve(process.cwd(), '..');
 }
+
+// Load .env from repo root so spawned review processes inherit GROQ_API_KEY
+function loadEnvFromRoot() {
+  const envPath = join(ROOT, '.env');
+  if (!existsSync(envPath)) return;
+  try {
+    const content = readFileSync(envPath, 'utf-8');
+    for (const line of content.split('\n')) {
+      const match = line.match(/^\s*GROQ_API_KEY\s*=\s*(.+?)\s*$/);
+      if (match) {
+        process.env.GROQ_API_KEY = match[1].trim().replace(/^["']|["']$/g, '');
+        break;
+      }
+    }
+  } catch (_) {}
+}
+loadEnvFromRoot();
+
 // Use 7700 by default to avoid conflict with course dev servers (Vite 5173, Next 3000, etc.)
 const PORT = process.env.DASHBOARD_PORT || 7700;
 
@@ -183,7 +201,7 @@ app.get('/api/courses/:courseId/challenges/:challengeId', (req, res) => {
   });
 });
 
-// POST /api/review - run review for one challenge, return updated progress
+// POST /api/review - run review in background so server stays responsive (no blocking)
 app.post('/api/review', (req, res) => {
   const { courseId, challengeId } = req.body || {};
   if (!courseId || !challengeId) {
@@ -193,17 +211,17 @@ app.post('/api/review', (req, res) => {
   if (!existsSync(script)) {
     return res.status(500).json({ error: 'Review script not found' });
   }
-  try {
-    execSync(`node "${script}" --course=${courseId} --challenge=${challengeId}`, {
-      cwd: ROOT,
-      stdio: 'pipe',
-      timeout: 120000,
-    });
-    const progress = getProgress();
-    res.json({ ok: true, progress });
-  } catch (e) {
-    res.status(500).json({ error: e.message || 'Review failed', ok: false });
-  }
+  loadEnvFromRoot();
+  const child = spawn('node', [script, `--course=${courseId}`, `--challenge=${challengeId}`], {
+    cwd: ROOT,
+    stdio: 'ignore',
+    env: { ...process.env },
+    detached: true,
+  });
+  child.unref(); // allow server to keep running without waiting for child
+  // Respond immediately so other requests (e.g. back to challenges) are not blocked
+  const progress = getProgress();
+  res.json({ ok: true, progress, started: true });
 });
 
 // Serve static UI if built

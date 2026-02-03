@@ -15,7 +15,8 @@
     { "id": "09-mutations", "name": "Mutations with useMutation", "weight": 0.084 },
     { "id": "10-optimistic-updates", "name": "Optimistic Updates", "weight": 0.084 },
     { "id": "11-api-local-state", "name": "API and Local State Together", "weight": 0.084 },
-    { "id": "12-error-loading-ux", "name": "Error and Loading UX", "weight": 0.085 }
+    { "id": "12-error-loading-ux", "name": "Error and Loading UX", "weight": 0.084 },
+    { "id": "13-query-parameters", "name": "Query with Parameters and Detail View", "weight": 0.076 }
   ],
   "scoring": {
     "functionalTests": 0.35,

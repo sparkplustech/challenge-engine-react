@@ -1,0 +1,9 @@
+{
+  "challengeId": "01-app-router-pages-layout",
+  "challengeName": "App Router, Pages, and Layout",
+  "difficulty": "beginner",
+  "estimatedTime": "30-45 minutes",
+  "skills": ["Next.js App Router", "File-based Routing", "Link Component", "Layout", "Page Structure"],
+  "filesToCheck": ["app/page.tsx", "app/about/page.tsx", "app/layout.tsx"],
+  "patternsRequired": ["serverComponent", "Link", "fileBasedRouting", "appDirectory"]
+}

@@ -1,0 +1,9 @@
+{
+  "challengeId": "14-search-and-pagination",
+  "challengeName": "Search and Pagination",
+  "difficulty": "intermediate",
+  "estimatedTime": "1.5 - 2 hours",
+  "skills": ["searchParams", "URL search params", "Pagination", "Filtering"],
+  "filesToCheck": ["app/posts/page.tsx"],
+  "patternsRequired": ["searchParams", "pagination"]
+}

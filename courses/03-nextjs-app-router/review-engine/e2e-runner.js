@@ -1,6 +1,8 @@
-import { execSync } from 'child_process';
+import { spawnSync, execSync } from 'child_process';
 import { existsSync } from 'fs';
 import { join } from 'path';
+
+const E2E_TIMEOUT_MS = 240000; // 4 min; on Windows use execSync to avoid spawnSync npx.cmd EINVAL
 
 /**
  * Runs Playwright E2E tests for a specific challenge
@@ -22,19 +24,33 @@ export async function runE2ETests(challengeId, projectDir) {
   }
 
   try {
-    // Run from project dir with relative path so Playwright finds config and webServer works (avoids Windows path issues).
-    // CI=1 ensures Playwright always starts the app via webServer (no manual "npm run dev" needed).
     const env = { ...process.env, CI: '1' };
-    const output = execSync(
-      `npx playwright test "${testFileRel}" --reporter=json`,
-      {
+    let output;
+    if (process.platform === 'win32') {
+      output = execSync(`npx playwright test "${testFileRel}" --reporter=json`, {
         cwd: projectDir,
         encoding: 'utf-8',
-        stdio: ['pipe', 'pipe', 'pipe'],
-        timeout: 120000, // 2 minutes (includes app startup)
-        env
+        timeout: E2E_TIMEOUT_MS,
+        env,
+        stdio: ['pipe', 'pipe', 'pipe']
+      });
+    } else {
+      const result = spawnSync('npx', ['playwright', 'test', testFileRel, '--reporter=json'], {
+        cwd: projectDir,
+        encoding: 'utf-8',
+        timeout: E2E_TIMEOUT_MS,
+        env,
+        shell: false
+      });
+      output = (result.stdout || '') + (result.stderr || '');
+      if (result.error) throw result.error;
+      if (result.status !== 0) {
+        const err = new Error(result.signal ? String(result.signal) : `Exit ${result.status}`);
+        err.stdout = result.stdout;
+        err.stderr = result.stderr;
+        throw err;
       }
-    );
+    }
 
     // Parse Playwright JSON output (may have npm prefix)
     const raw = (output || '') + '';

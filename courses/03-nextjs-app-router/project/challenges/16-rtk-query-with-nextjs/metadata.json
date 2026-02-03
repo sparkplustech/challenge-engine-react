@@ -1,0 +1,9 @@
+{
+  "challengeId": "16-rtk-query-with-nextjs",
+  "challengeName": "RTK Query with Next.js",
+  "difficulty": "intermediate",
+  "estimatedTime": "2 - 2.5 hours",
+  "skills": ["RTK Query", "createApi", "fetchBaseQuery", "useGetPostsQuery", "useMutation"],
+  "filesToCheck": ["app/store/apiSlice.ts", "app/store/store.ts", "app/posts/PostsList.tsx"],
+  "patternsRequired": ["createApi", "fetchBaseQuery", "useQuery", "useMutation"]
+}

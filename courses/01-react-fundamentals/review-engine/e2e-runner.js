@@ -1,6 +1,9 @@
-import { execSync } from 'child_process';
+import { spawnSync, execSync } from 'child_process';
 import { existsSync } from 'fs';
 import { join } from 'path';
+
+// 4 min (Windows/slow machines need more than 2 min); execSync on Windows avoids spawnSync npx.cmd EINVAL
+const E2E_TIMEOUT_MS = 240000;
 
 /**
  * Runs Playwright E2E tests for a specific challenge
@@ -8,16 +11,42 @@ import { join } from 'path';
  * On port conflict, retries with alternate ports (5174–5180).
  */
 function runPlaywright(projectDir, testFileRel, env) {
-  return execSync(
-    `npx playwright test "${testFileRel}" --reporter=json`,
-    {
-      cwd: projectDir,
-      encoding: 'utf-8',
-      stdio: ['pipe', 'pipe', 'pipe'],
-      timeout: 120000,
-      env: { ...process.env, ...env }
+  const isWin = process.platform === 'win32';
+  const runEnv = { ...process.env, ...env };
+
+  // On Windows, spawnSync('npx.cmd', ..., { shell: false }) can cause EINVAL; use execSync with long timeout
+  if (isWin) {
+    try {
+      return execSync(`npx playwright test "${testFileRel}" --reporter=json`, {
+        cwd: projectDir,
+        encoding: 'utf-8',
+        timeout: E2E_TIMEOUT_MS,
+        env: runEnv,
+        stdio: ['pipe', 'pipe', 'pipe']
+      });
+    } catch (err) {
+      err.stdout = err.stdout ?? '';
+      err.stderr = err.stderr ?? '';
+      throw err;
     }
-  );
+  }
+
+  const result = spawnSync('npx', ['playwright', 'test', testFileRel, '--reporter=json'], {
+    cwd: projectDir,
+    encoding: 'utf-8',
+    timeout: E2E_TIMEOUT_MS,
+    env: runEnv,
+    shell: false
+  });
+  if (result.error) throw result.error;
+  if (result.status !== 0) {
+    const err = new Error(result.signal || `Exit ${result.status}`);
+    err.stdout = result.stdout;
+    err.stderr = result.stderr;
+    err.status = result.status;
+    throw err;
+  }
+  return result.stdout || '';
 }
 
 export async function runE2ETests(challengeId, projectDir) {

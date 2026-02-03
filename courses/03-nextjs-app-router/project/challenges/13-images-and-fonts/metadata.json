@@ -1,0 +1,9 @@
+{
+  "challengeId": "13-images-and-fonts",
+  "challengeName": "Images and Fonts",
+  "difficulty": "beginner",
+  "estimatedTime": "45 min - 1 hour",
+  "skills": ["next/image", "next/font", "Image optimization", "Font optimization"],
+  "filesToCheck": ["app/page.tsx", "app/layout.tsx"],
+  "patternsRequired": ["nextImage", "nextFont"]
+}

@@ -1,0 +1,9 @@
+{
+  "challengeId": "11-error-handling",
+  "challengeName": "Error Handling",
+  "difficulty": "intermediate",
+  "estimatedTime": "1 hour",
+  "skills": ["error.tsx", "notFound()", "not-found.tsx", "Error boundaries"],
+  "filesToCheck": ["app/error.tsx", "app/posts/[id]/page.tsx", "app/not-found.tsx"],
+  "patternsRequired": ["errorTsx", "notFound"]
+}

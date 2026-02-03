@@ -1,0 +1,9 @@
+{
+  "challengeId": "03-data-fetching-server",
+  "challengeName": "Data Fetching in Server Components",
+  "difficulty": "beginner",
+  "estimatedTime": "1 - 1.5 hours",
+  "skills": ["Async Server Components", "fetch", "Data fetching", "Server-side data"],
+  "filesToCheck": ["app/posts/page.tsx"],
+  "patternsRequired": ["asyncServerComponent", "fetch", "await"]
+}

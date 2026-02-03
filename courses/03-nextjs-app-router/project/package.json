@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "node scripts/patch-esm-shims.js",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",

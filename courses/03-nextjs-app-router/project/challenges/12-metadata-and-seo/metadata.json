@@ -1,0 +1,9 @@
+{
+  "challengeId": "12-metadata-and-seo",
+  "challengeName": "Metadata and SEO",
+  "difficulty": "beginner",
+  "estimatedTime": "45 min - 1 hour",
+  "skills": ["metadata", "generateMetadata", "Open Graph", "SEO"],
+  "filesToCheck": ["app/layout.tsx", "app/page.tsx", "app/posts/page.tsx"],
+  "patternsRequired": ["metadata", "generateMetadata"]
+}

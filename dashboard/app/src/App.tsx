@@ -2,6 +2,42 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 const API = '/api';
+const FETCH_TIMEOUT_MS = 20000;
+
+/** Fetch with timeout and optional abort signal so requests don't hang and can be cancelled on navigation. */
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit & { timeoutMs?: number } = {}
+): Promise<Response> {
+  const { timeoutMs = FETCH_TIMEOUT_MS, signal: externalSignal, ...fetchOptions } = options;
+  const controller = new AbortController();
+  let abortedByTimeout = false;
+  const timeoutId = setTimeout(() => {
+    abortedByTimeout = true;
+    controller.abort();
+  }, timeoutMs);
+  if (externalSignal) {
+    if (externalSignal.aborted) {
+      clearTimeout(timeoutId);
+      throw new DOMException('Aborted', 'AbortError');
+    }
+    externalSignal.addEventListener('abort', () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    });
+  }
+  try {
+    const res = await fetch(url, { ...fetchOptions, signal: controller.signal });
+    clearTimeout(timeoutId);
+    return res;
+  } catch (e) {
+    clearTimeout(timeoutId);
+    if (abortedByTimeout && (e as { name?: string })?.name === 'AbortError') {
+      throw new Error('Request timed out. The server may be slow or unreachable.');
+    }
+    throw e;
+  }
+}
 
 type Progress = {
   lastUpdated: string | null;
@@ -114,7 +150,9 @@ export default function App() {
   const [view, setView] = useState<'courses' | 'challenges' | 'detail'>('courses');
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [selectedChallengeId, setSelectedChallengeId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loadingCourses, setLoadingCourses] = useState(true);
+  const [loadingChallenges, setLoadingChallenges] = useState(false);
+  const [loadingDetail, setLoadingDetail] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [runningReview, setRunningReview] = useState<string | null>(null);
   const [resultsCollapsed, setResultsCollapsed] = useState(false);
@@ -125,88 +163,123 @@ export default function App() {
 
   const fetchProgress = useCallback(async () => {
     try {
-      const r = await fetch(`${API}/progress`);
-      const data = await r.json();
+      const r = await fetchWithTimeout(`${API}/progress`);
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        setError((data as { error?: string }).error || `Request failed (${r.status})`);
+        setProgress(null);
+        return;
+      }
       setProgress(data);
+      setError(null);
     } catch (e) {
-      setError(String(e));
+      if ((e as { name?: string })?.name === 'AbortError') return;
+      const msg = e instanceof Error ? e.message : String(e);
+      if (/Failed to fetch|NetworkError|Load failed|Connection refused/i.test(msg)) {
+        setError('Dashboard API not reachable. Start it from repo root: npm run dashboard:api (or npm run dashboard:dev for UI + API).');
+      } else {
+        setError(msg);
+      }
+      setProgress(null);
     }
   }, []);
 
-  const fetchCourses = useCallback(async (page: number) => {
-    setLoading(true);
+  const fetchCourses = useCallback(async (page: number, signal?: AbortSignal) => {
+    setLoadingCourses(true);
     try {
-      const r = await fetch(`${API}/courses?page=${page}&limit=20`);
-      const data = await r.json();
+      const r = await fetchWithTimeout(`${API}/courses?page=${page}&limit=20`, { signal, timeoutMs: FETCH_TIMEOUT_MS });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        setError(data.error || `Request failed (${r.status})`);
+        setCourses([]);
+        return;
+      }
       setCourses(data.courses || []);
       setCoursesTotalPages(data.totalPages || 1);
       setCoursesPage(page);
       setError(null);
     } catch (e) {
-      setError(String(e));
+      if ((e as { name?: string })?.name === 'AbortError') return;
+      setError(e instanceof Error ? e.message : String(e));
     } finally {
-      setLoading(false);
+      setLoadingCourses(false);
     }
   }, []);
 
-  const fetchChallenges = useCallback(async (courseId: string, page: number) => {
-    setLoading(true);
+  const fetchChallenges = useCallback(async (courseId: string, page: number, signal?: AbortSignal) => {
+    setLoadingChallenges(true);
     try {
-      const r = await fetch(`${API}/courses/${courseId}/challenges?page=${page}&limit=50`);
-      const data = await r.json();
+      const r = await fetchWithTimeout(`${API}/courses/${courseId}/challenges?page=${page}&limit=50`, { signal, timeoutMs: FETCH_TIMEOUT_MS });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        setError(data.error || `Request failed (${r.status})`);
+        setChallenges([]);
+        return;
+      }
       setChallenges(data.challenges || []);
       setChallengesTotalPages(data.totalPages || 1);
       setChallengesPage(page);
       setError(null);
     } catch (e) {
-      setError(String(e));
+      if ((e as { name?: string })?.name === 'AbortError') return;
+      setError(e instanceof Error ? e.message : String(e));
     } finally {
-      setLoading(false);
+      setLoadingChallenges(false);
     }
   }, []);
 
-  const fetchDetail = useCallback(async (courseId: string, challengeId: string) => {
-    setLoading(true);
+  const fetchDetail = useCallback(async (courseId: string, challengeId: string, signal?: AbortSignal) => {
+    setLoadingDetail(true);
     try {
-      const r = await fetch(`${API}/courses/${courseId}/challenges/${challengeId}`);
-      const data = await r.json();
+      const r = await fetchWithTimeout(`${API}/courses/${courseId}/challenges/${challengeId}`, { signal, timeoutMs: FETCH_TIMEOUT_MS });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        setError(data.error || `Request failed (${r.status})`);
+        setDetail(null);
+        return;
+      }
       setDetail(data);
       setError(null);
     } catch (e) {
-      setError(String(e));
+      if ((e as { name?: string })?.name === 'AbortError') return;
+      setError(e instanceof Error ? e.message : String(e));
     } finally {
-      setLoading(false);
+      setLoadingDetail(false);
     }
   }, []);
 
-  // URL routing - sync with URL params on mount
+  // URL routing - sync with URL params on mount (with timeout so we don't hang)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get('course');
     const challengeId = params.get('challenge');
-    
-    if (courseId) {
-      // Fetch course data first
-      fetch(`${API}/courses/${courseId}`)
-        .then(r => r.json())
-        .then(courseData => {
-          const course = { id: courseId, name: courseData.name || courseId };
-          setSelectedCourse(course);
-          if (challengeId) {
-            setSelectedChallengeId(challengeId);
-            setView('detail');
-          } else {
-            setSelectedChallengeId(null);
-            setView('challenges');
-          }
-        })
-        .catch(() => {
-          // If course not found, just show courses list
+    if (!courseId) return;
+    const controller = new AbortController();
+    fetchWithTimeout(`${API}/courses/${courseId}`, { signal: controller.signal, timeoutMs: 10000 })
+      .then(r => r.json().catch(() => ({})).then((courseData: { name?: string }) => ({ ok: r.ok, data: courseData })))
+      .then(({ ok, data: courseData }) => {
+        if (!ok) {
           setView('courses');
           setSelectedCourse(null);
           setSelectedChallengeId(null);
-        });
-    }
+          return;
+        }
+        const course = { id: courseId, name: courseData.name || courseId };
+        setSelectedCourse(course);
+        if (challengeId) {
+          setSelectedChallengeId(challengeId);
+          setView('detail');
+        } else {
+          setSelectedChallengeId(null);
+          setView('challenges');
+        }
+      })
+      .catch(() => {
+        setView('courses');
+        setSelectedCourse(null);
+        setSelectedChallengeId(null);
+      });
+    return () => controller.abort();
   }, []);
 
   // Update URL when view/state changes
@@ -235,16 +308,24 @@ export default function App() {
   }, [fetchProgress]);
 
   useEffect(() => {
-    if (view === 'courses') fetchCourses(coursesPage);
+    if (view !== 'courses') return;
+    const controller = new AbortController();
+    fetchCourses(coursesPage, controller.signal);
+    return () => controller.abort();
   }, [view, coursesPage, fetchCourses]);
 
   useEffect(() => {
-    if (view === 'challenges' && selectedCourse) fetchChallenges(selectedCourse.id, challengesPage);
+    if (view !== 'challenges' || !selectedCourse) return;
+    const controller = new AbortController();
+    fetchChallenges(selectedCourse.id, challengesPage, controller.signal);
+    return () => controller.abort();
   }, [view, selectedCourse, challengesPage, fetchChallenges]);
 
   useEffect(() => {
-    if (view === 'detail' && selectedCourse && selectedChallengeId)
-      fetchDetail(selectedCourse.id, selectedChallengeId);
+    if (view !== 'detail' || !selectedCourse || !selectedChallengeId) return;
+    const controller = new AbortController();
+    fetchDetail(selectedCourse.id, selectedChallengeId, controller.signal);
+    return () => controller.abort();
   }, [view, selectedCourse, selectedChallengeId, fetchDetail]);
 
   const openChallenges = (course: Course) => {
@@ -264,14 +345,67 @@ export default function App() {
   const runReview = async (courseId: string, challengeId: string) => {
     const key = `${courseId}/${challengeId}`;
     setRunningReview(key);
+    setError(null);
+    let clearRunningInFinally = true;
     try {
       const r = await fetch(`${API}/review`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ courseId, challengeId }),
       });
-      const data = await r.json();
-      if (data.ok && data.progress) setProgress(data.progress);
+      let data: { ok?: boolean; error?: string; progress?: Progress; started?: boolean } = {};
+      try {
+        data = await r.json();
+      } catch (_) {
+        setError(r.ok ? 'Review server returned invalid response.' : `Review failed (${r.status}). Is the dashboard API running? (npm run dashboard:api or npm run dashboard:dev)`);
+        return;
+      }
+      if (!r.ok || !data.ok) {
+        setError(data.error || (r.status ? `Review failed (${r.status})` : 'Review failed'));
+        return;
+      }
+      if (data.progress) setProgress(data.progress);
+      // If review runs in background, poll for completion so we can refresh and clear "Running review…"
+      if (data.started) {
+        clearRunningInFinally = false;
+        const initialLastUpdated = data.progress?.lastUpdated ?? null;
+        const maxWait = 120000; // 2 min
+        const startedAt = Date.now();
+        const poll = async () => {
+          if (Date.now() - startedAt > maxWait) {
+            setRunningReview(null);
+            return true;
+          }
+          try {
+            const pr = await fetch(`${API}/progress`);
+            const prog = await pr.json();
+            if (prog.lastUpdated !== initialLastUpdated) {
+              setProgress(prog);
+              // Brief delay so review script has finished writing challenge-results.json
+              await new Promise((resolve) => setTimeout(resolve, 600));
+              if (selectedCourse?.id === courseId) {
+                const res = await fetch(`${API}/courses/${courseId}/challenges?page=${challengesPage}&limit=50`);
+                const d = await res.json();
+                setChallenges(d.challenges || []);
+              }
+              if (selectedCourse?.id === courseId && selectedChallengeId === challengeId) {
+                const res = await fetch(`${API}/courses/${courseId}/challenges/${challengeId}`);
+                setDetail(await res.json());
+              }
+              setRunningReview(null);
+              return true;
+            }
+          } catch (_) {}
+          return false;
+        };
+        const intervalId = setInterval(async () => {
+          const done = await poll();
+          if (done) clearInterval(intervalId);
+        }, 2500);
+        setTimeout(() => clearInterval(intervalId), maxWait);
+        return;
+      }
+      // Synchronous completion (legacy)
       if (view === 'detail' && selectedCourse?.id === courseId && selectedChallengeId === challengeId) {
         const res = await fetch(`${API}/courses/${courseId}/challenges/${challengeId}`);
         setDetail(await res.json());
@@ -282,9 +416,14 @@ export default function App() {
         setChallenges(d.challenges || []);
       }
     } catch (e) {
-      setError(String(e));
+      const msg = e instanceof Error ? e.message : String(e);
+      if (/Failed to fetch|NetworkError|Load failed|Connection refused/i.test(msg)) {
+        setError('Cannot reach review server. Start the dashboard API: npm run dashboard:api (or npm run dashboard:dev for UI + API).');
+      } else {
+        setError(msg || 'Review failed');
+      }
     } finally {
-      setRunningReview(null);
+      if (clearRunningInFinally) setRunningReview(null);
     }
   };
 
@@ -366,7 +505,7 @@ export default function App() {
               onChange={(e) => setCourseSearch(e.target.value)}
             />
           </div>
-          {loading ? (
+          {loadingCourses ? (
             <div className="loading">Loading courses…</div>
           ) : (
             <>
@@ -503,7 +642,7 @@ export default function App() {
               Not passed
             </button>
           </div>
-          {loading ? (
+          {loadingChallenges ? (
             <div className="loading">Loading challenges…</div>
           ) : (
             <>
@@ -563,7 +702,10 @@ export default function App() {
         </>
       )}
 
-      {view === 'detail' && detail && selectedCourse && progress && (
+      {view === 'detail' && selectedCourse && selectedChallengeId && (loadingDetail || !detail || !progress) && (
+        <div className="loading" style={{ marginTop: '1rem' }}>Loading challenge…</div>
+      )}
+      {view === 'detail' && detail && selectedCourse && progress && !loadingDetail && (
         <div className="detail-panel">
           {progress.courses[selectedCourse.id] && (
             <section className="course-progress-bar">

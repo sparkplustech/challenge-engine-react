@@ -1,5 +1,4 @@
 import ChallengeList from './components/ChallengeList'
-import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -13,8 +12,6 @@ export default function Home() {
         </p>
       </header>
       <ChallengeList />
-      {/* TODO: Use Link component per challenges/01-server-components/README.md */}
-      {/* <Link href="/about">About</Link> */}
     </main>
   )
 }

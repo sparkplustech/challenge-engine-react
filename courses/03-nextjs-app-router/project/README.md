@@ -12,6 +12,8 @@ This is a **real, runnable Next.js application** where you'll work on challenges
 npm install
 ```
 
+After install, a `postinstall` script runs to patch ESM shims for Vitest (so `npm test` works). If tests fail with module-not-found for `.mjs` files, run `node scripts/patch-esm-shims.js` and try again.
+
 ### 2. Start the Development Server
 
 ```bash
@@ -22,11 +24,25 @@ The app will open at `http://localhost:3000`
 
 ### 3. Work on Challenges
 
-Challenges are embedded in this project. Each challenge adds or modifies functionality:
+**Complete all 17 challenges in order (01 → 17).** Each challenge builds on the previous. Read `challenges/{id}/README.md` before starting; each README states prerequisites and what the tests expect.
 
-- **Challenge 01**: Server Components and Basic Routing (`challenges/01-server-components/README.md`) - **BEGINNER**
-- **Challenge 02**: Data Fetching and API Routes (`challenges/02-data-fetching/README.md`) - **INTERMEDIATE**
-- **Challenge 03**: Fullstack Features and Metadata (`challenges/03-fullstack-features/README.md`) - **ADVANCED**
+- **01** App Router, Pages, and Layout (`challenges/01-app-router-pages-layout/README.md`)
+- **02** Server and Client Components (`challenges/02-server-and-client-components/README.md`)
+- **03** Data Fetching in Server Components (`challenges/03-data-fetching-server/README.md`)
+- **04** API Route Handlers (`challenges/04-api-route-handlers/README.md`)
+- **05** Loading and Streaming (`challenges/05-loading-and-streaming/README.md`)
+- **06** Dynamic Routes (`challenges/06-dynamic-routes/README.md`)
+- **07** Static and Dynamic Rendering (`challenges/07-static-and-dynamic-rendering/README.md`)
+- **08** SSR (Server-Side Rendering) (`challenges/08-ssr-dynamic-rendering/README.md`)
+- **09** Server Actions and Revalidation (`challenges/09-server-actions-and-revalidation/README.md`)
+- **10** Caching and Revalidating (`challenges/10-caching-and-revalidating/README.md`)
+- **11** Error Handling (`challenges/11-error-handling/README.md`)
+- **12** Metadata and SEO (`challenges/12-metadata-and-seo/README.md`)
+- **13** Images and Fonts (`challenges/13-images-and-fonts/README.md`)
+- **14** Search and Pagination (`challenges/14-search-and-pagination/README.md`)
+- **15** Redux Toolkit with Next.js (`challenges/15-redux-toolkit-with-nextjs/README.md`)
+- **16** RTK Query with Next.js (`challenges/16-rtk-query-with-nextjs/README.md`)
+- **17** Fullstack Capstone (`challenges/17-fullstack-capstone/README.md`)
 
 ### 4. Verify Your Work
 
@@ -41,33 +57,48 @@ Challenges are embedded in this project. Each challenge adds or modifies functio
 # Review all challenges
 npm run review
 
-# Review specific challenge
-npm run review -- --challenge=01-server-components
+# Review specific challenge (use the challenge id from the README)
+npm run review -- --challenge=01-app-router-pages-layout
 ```
 
 
 ## 📊 Progress Evidence
 
-*Auto-updated when you run review. Last run: 2/2/2026, 3:26:51 AM*
+*Auto-updated when you run review. Last run: 2/3/2026, 12:46:55 PM*
 
 | Metric | Value |
 |--------|-------|
-| Challenges completed | 0 / 3 (0%) |
+| Challenges completed | 0 / 17 (0%) |
 | Average score | 0% |
 
 | Challenge | Skills covered | Status |
 |-----------|----------------|--------|
-| Server Components and Basic Routing | Next.js App Router, Server Components, File-based Routing, Link Component, Page Structure | — |
-| Data Fetching and API Routes | Server Component Data Fetching, API Routes, Async Components, Error Handling, Loading States | — |
-| Fullstack Features and Metadata | Client Components, Server Actions, Metadata API, Form Handling, Dynamic Routing, SEO Optimization | — |
+| App Router, Pages, and Layout | Next.js App Router, File-based Routing, Link Component, Layout, Page Structure | — |
+| Server and Client Components | Server Components, Client Components, 'use client', useState, Event handlers | — |
+| Data Fetching in Server Components | Async Server Components, fetch, Data fetching, Server-side data | — |
+| API Route Handlers | Route Handlers, app/api, GET, POST, Response.json | — |
+| Loading and Streaming | loading.tsx, Streaming, Suspense, Loading UI | — |
+| Dynamic Routes | Dynamic Routes, [id], params, generateStaticParams | — |
+| Static and Dynamic Rendering | Static Rendering, Dynamic Rendering, force-static, force-dynamic | — |
+| SSR (Server-Side Rendering) | SSR, force-dynamic, cache: no-store, Server-side rendering | — |
+| Server Actions and Revalidation | Server Actions, 'use server', revalidatePath, revalidateTag | — |
+| Caching and Revalidating | fetch cache, revalidate, revalidatePath, revalidateTag | — |
+| Error Handling | error.tsx, notFound(), not-found.tsx, Error boundaries | — |
+| Metadata and SEO | metadata, generateMetadata, Open Graph, SEO | — |
+| Images and Fonts | next/image, next/font, Image optimization, Font optimization | — |
+| Search and Pagination | searchParams, URL search params, Pagination, Filtering | — |
+| Redux Toolkit with Next.js | Redux Toolkit, configureStore, Provider, useSelector, useDispatch | — |
+| RTK Query with Next.js | RTK Query, createApi, fetchBaseQuery, useGetPostsQuery, useMutation | — |
+| Fullstack Capstone | Dynamic routes, Server Components, Client Components, Error handling, Metadata, Server Actions | — |
 
 ## 📋 Challenge Workflow
 
-1. **Read the challenge** in `challenges/{challenge-id}/README.md`
-2. **Modify code** in `app/` directory
-3. **Run the app** (`npm run dev`) to see your changes
-4. **Verify visually** that features work correctly
-5. **Run review** (`npm run review`) to get comprehensive scoring
+1. **Complete challenges in order** — Start with challenge 01; only move to the next after passing (≥80%).
+2. **Read the challenge** in `challenges/{challenge-id}/README.md` — Each README states prerequisites, exact file paths, and what the tests expect.
+3. **Modify code** in `app/` directory — Create or update only the files the README asks for.
+4. **Run the app** (`npm run dev`) to see your changes and verify visually.
+5. **Run review** for that challenge: `npm run review -- --challenge={challenge-id}` (e.g. `--challenge=01-app-router-pages-layout`).
+6. **Repeat** for the next challenge until you complete all 17.
 
 ## 🧪 Testing
 
@@ -112,10 +143,11 @@ project/
 │   ├── layout.tsx          → Root layout
 │   ├── api/                → API routes
 │   └── ...
-├── challenges/              → Challenge definitions
-│   ├── 01-server-components/    (BEGINNER)
-│   ├── 02-data-fetching/         (INTERMEDIATE)
-│   └── 03-fullstack-features/    (ADVANCED)
+├── challenges/              → Challenge definitions (complete in order 01 → 17)
+│   ├── 01-app-router-pages-layout/
+│   ├── 02-server-and-client-components/
+│   ├── ... (03 through 16)
+│   └── 17-fullstack-capstone/
 ├── tests/                   → Test files
 │   ├── challenge-*.test.tsx  → Unit tests
 │   └── e2e/                → E2E tests (Playwright)

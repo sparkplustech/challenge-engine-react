@@ -1,0 +1,9 @@
+{
+  "challengeId": "02-server-and-client-components",
+  "challengeName": "Server and Client Components",
+  "difficulty": "beginner",
+  "estimatedTime": "45 min - 1 hour",
+  "skills": ["Server Components", "Client Components", "'use client'", "useState", "Event handlers"],
+  "filesToCheck": ["app/page.tsx", "app/components/Counter.tsx", "app/layout.tsx"],
+  "patternsRequired": ["useClient", "serverComponent", "useState"]
+}

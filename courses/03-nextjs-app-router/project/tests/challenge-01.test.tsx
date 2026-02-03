@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-describe('Challenge 01: Server Components and Basic Routing', () => {
+describe('Challenge 01: App Router, Pages, and Layout', () => {
   it('should have app/page.tsx', () => {
     const pageFile = join(__dirname, '../app/page.tsx');
     expect(existsSync(pageFile)).toBe(true);

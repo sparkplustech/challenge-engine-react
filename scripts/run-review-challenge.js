@@ -7,7 +7,7 @@
  */
 
 import { execSync } from 'child_process';
-import { existsSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -15,7 +15,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ROOT_DIR = join(__dirname, '..');
 
+function loadEnvFromRoot() {
+  const envPath = join(ROOT_DIR, '.env');
+  if (!existsSync(envPath)) return;
+  try {
+    const content = readFileSync(envPath, 'utf-8');
+    for (const line of content.split('\n')) {
+      const match = line.match(/^\s*GROQ_API_KEY\s*=\s*(.+?)\s*$/);
+      if (match) {
+        process.env.GROQ_API_KEY = match[1].trim().replace(/^["']|["']$/g, '');
+        break;
+      }
+    }
+  } catch (_) {}
+}
+
 function main() {
+  loadEnvFromRoot();
   const args = process.argv.slice(2);
   const courseArg = args.find(a => a.startsWith('--course='));
   const challengeArg = args.find(a => a.startsWith('--challenge='));
@@ -35,7 +51,11 @@ function main() {
   }
 
   console.log(`📝 Reviewing ${courseId} → ${challengeId}\n`);
-  execSync(`node "${reviewScript}" --challenge=${challengeId}`, { cwd: courseDir, stdio: 'inherit' });
+  execSync(`node "${reviewScript}" --challenge=${challengeId}`, {
+    cwd: courseDir,
+    stdio: 'inherit',
+    env: { ...process.env },
+  });
   console.log('\n📊 Updating progress...');
   execSync('node scripts/update-progress.js', { cwd: ROOT_DIR, stdio: 'inherit' });
   console.log('\n✅ Done.');

@@ -1,0 +1,9 @@
+{
+  "challengeId": "09-server-actions-and-revalidation",
+  "challengeName": "Server Actions and Revalidation",
+  "difficulty": "intermediate",
+  "estimatedTime": "1.5 - 2 hours",
+  "skills": ["Server Actions", "'use server'", "revalidatePath", "revalidateTag"],
+  "filesToCheck": ["app/actions.ts", "app/posts/page.tsx", "app/components/AddPostForm.tsx"],
+  "patternsRequired": ["useServer", "revalidatePath", "revalidateTag"]
+}

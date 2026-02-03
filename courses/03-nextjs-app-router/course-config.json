@@ -4,21 +4,23 @@
   "description": "Fullstack application development with Next.js 13+ App Router",
   "version": "1.0.0",
   "challenges": [
-    {
-      "id": "01-server-components",
-      "name": "Server Components and Basic Routing",
-      "weight": 0.33
-    },
-    {
-      "id": "02-data-fetching",
-      "name": "Data Fetching and API Routes",
-      "weight": 0.33
-    },
-    {
-      "id": "03-fullstack-features",
-      "name": "Fullstack Features and Metadata",
-      "weight": 0.34
-    }
+    { "id": "01-app-router-pages-layout", "name": "App Router, Pages, and Layout", "weight": 0.0588 },
+    { "id": "02-server-and-client-components", "name": "Server and Client Components", "weight": 0.0588 },
+    { "id": "03-data-fetching-server", "name": "Data Fetching in Server Components", "weight": 0.0588 },
+    { "id": "04-api-route-handlers", "name": "API Route Handlers", "weight": 0.0588 },
+    { "id": "05-loading-and-streaming", "name": "Loading and Streaming", "weight": 0.0588 },
+    { "id": "06-dynamic-routes", "name": "Dynamic Routes", "weight": 0.0588 },
+    { "id": "07-static-and-dynamic-rendering", "name": "Static and Dynamic Rendering", "weight": 0.0588 },
+    { "id": "08-ssr-dynamic-rendering", "name": "SSR (Server-Side Rendering)", "weight": 0.0588 },
+    { "id": "09-server-actions-and-revalidation", "name": "Server Actions and Revalidation", "weight": 0.0588 },
+    { "id": "10-caching-and-revalidating", "name": "Caching and Revalidating", "weight": 0.0588 },
+    { "id": "11-error-handling", "name": "Error Handling", "weight": 0.0588 },
+    { "id": "12-metadata-and-seo", "name": "Metadata and SEO", "weight": 0.0588 },
+    { "id": "13-images-and-fonts", "name": "Images and Fonts", "weight": 0.0588 },
+    { "id": "14-search-and-pagination", "name": "Search and Pagination", "weight": 0.0588 },
+    { "id": "15-redux-toolkit-with-nextjs", "name": "Redux Toolkit with Next.js", "weight": 0.0588 },
+    { "id": "16-rtk-query-with-nextjs", "name": "RTK Query with Next.js", "weight": 0.0588 },
+    { "id": "17-fullstack-capstone", "name": "Fullstack Capstone", "weight": 0.0588 }
   ],
   "scoring": {
     "functionalTests": 0.35,

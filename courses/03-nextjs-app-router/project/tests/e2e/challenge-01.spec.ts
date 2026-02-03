@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * E2E Tests for Challenge 01: Server Components and Basic Routing
+ * E2E Tests for Challenge 01: App Router, Pages, and Layout
  */
 
-test.describe('Challenge 01: Server Components - E2E', () => {
+test.describe('Challenge 01: App Router, Pages, and Layout - E2E', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });
@@ -13,22 +13,16 @@ test.describe('Challenge 01: Server Components - E2E', () => {
     await expect(page.locator('h1, h2, h3').first()).toBeVisible();
   });
 
-  test('should navigate to about page', async ({ page }) => {
+  test('should have link to about and navigate to about page', async ({ page }) => {
     const aboutLink = page.getByRole('link', { name: /about/i }).first();
-    
-    if (await aboutLink.isVisible().catch(() => false)) {
-      await aboutLink.click();
-      await page.waitForURL(/about/i);
-      expect(page.url()).toContain('about');
-    }
+    await expect(aboutLink).toBeVisible();
+    await aboutLink.click();
+    await page.waitForURL(/about/i);
+    expect(page.url()).toContain('about');
   });
 
-  test('should have working navigation', async ({ page }) => {
-    // Check if navigation links exist
+  test('should have at least one navigation link', async ({ page }) => {
     const links = page.locator('a[href*="/"]');
-    const linkCount = await links.count();
-    
-    // Should have at least one navigation link
-    expect(linkCount).toBeGreaterThan(0);
+    expect(await links.count()).toBeGreaterThan(0);
   });
 });
