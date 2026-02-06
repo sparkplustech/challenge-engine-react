@@ -7,21 +7,10 @@ interface TaskCardProps {
   taskId?: string | number
 }
 
-export default function TaskCard({ title, description, priority, completed, onToggle, taskId }: TaskCardProps) {
+export default function TaskCard(_props: TaskCardProps) {
   return (
     <article id="task-card">
-      {onToggle != null && taskId != null && (
-        <input
-          type="checkbox"
-          role="checkbox"
-          checked={completed ?? false}
-          onChange={() => onToggle(taskId)}
-          aria-label={`Mark ${title} as ${completed ? 'incomplete' : 'complete'}`}
-        />
-      )}
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <p>Priority: {priority}</p>
+      <p>Implement: display title, description, and priority from props</p>
     </article>
   )
 }
