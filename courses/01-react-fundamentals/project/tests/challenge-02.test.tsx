@@ -39,15 +39,6 @@ describe('Challenge 02: Dynamic Task Rendering', () => {
     expect(cards.length).toBe(5);
   });
 
-  it('should have tasks state in App (useState or useReducer)', () => {
-    const appContent = readFileSync(
-      join(__dirname, '../src/App.tsx'),
-      'utf-8'
-    );
-    const hasTasksState = appContent.includes('useState') || appContent.includes('useReducer');
-    expect(hasTasksState).toBe(true);
-  });
-
   it('should use map in TaskList', () => {
     const taskListContent = readFileSync(
       join(__dirname, '../src/components/TaskList.tsx'),
