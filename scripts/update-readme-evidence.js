@@ -196,7 +196,7 @@ function updateRootReadmeEvidence() {
   for (const [courseId, course] of Object.entries(progress.courses || {})) {
     const total = course.totalChallenges ?? 0;
     const completed = course.completedChallenges ?? 0;
-    const pct = total > 0 ? Math.round((completed / total) * 10) / 10 : 0;
+    const pct = total > 0 ? Math.round((completed / total) * 1000) / 10 : 0;
     const score = Math.round((course.averageScore ?? 0) * 10) / 10;
     const passed = (course.challenges && Object.values(course.challenges).every(c => c.passed)) || (total > 0 && completed === total);
     const status = passed ? 'Pass' : 'Fail';
