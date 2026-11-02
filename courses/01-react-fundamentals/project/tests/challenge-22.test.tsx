@@ -19,6 +19,10 @@ describe('Challenge 22: Data Fetching - Loading and Error State', () => {
       json: () => Promise.resolve(mockData),
     });
     render(<FetchDemoView />);
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      '/api/todos.json',
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
+    );
     await waitFor(() => {
       expect(screen.getByText('Test todo')).toBeInTheDocument();
     });

@@ -1,7 +1,11 @@
 import { describe, it, expect } from 'vitest'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { readFileSync, existsSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import { Provider } from 'react-redux'
+import { store } from '../src/store/store'
+import CounterView from '../src/components/CounterView'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -30,5 +34,19 @@ describe('Challenge 03: Reading and Dispatching', () => {
     expect(content).toContain('counter-value')
     expect(content).toContain('increment-btn')
     expect(content).toContain('decrement-btn')
+  })
+
+  it('reads the counter and dispatches increment and decrement actions', () => {
+    render(
+      <Provider store={store}>
+        <CounterView />
+      </Provider>,
+    )
+
+    expect(screen.getByTestId('counter-value')).toHaveTextContent('0')
+    fireEvent.click(screen.getByTestId('increment-btn'))
+    expect(screen.getByTestId('counter-value')).toHaveTextContent('1')
+    fireEvent.click(screen.getByTestId('decrement-btn'))
+    expect(screen.getByTestId('counter-value')).toHaveTextContent('0')
   })
 })

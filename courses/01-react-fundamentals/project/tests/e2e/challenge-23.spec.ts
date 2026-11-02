@@ -10,12 +10,14 @@ test.describe('Challenge 23: useRef - Focus Management - E2E', () => {
   });
 
   test('should display filter bar with search input', async ({ page }) => {
-    await expect(page.locator('#filter-bar').or(page.locator('#search-input'))).toBeVisible();
+    await expect(page.locator('#filter-bar')).toBeVisible();
+    await expect(page.locator('#search-input')).toBeVisible();
   });
 
   test('search input should exist and be visible', async ({ page }) => {
     const searchInput = page.locator('#search-input');
     await expect(searchInput).toBeVisible();
     await expect(searchInput).toHaveAttribute('type', 'text');
+    await expect(searchInput).toBeFocused();
   });
 });

@@ -1,13 +1,176 @@
 {
   "courseId": "01-react-fundamentals",
   "courseName": "React Fundamentals",
-  "lastUpdated": "2026-02-06T11:31:54.754Z",
+  "lastUpdated": "2026-11-02T11:50:33.204Z",
   "totalChallenges": 23,
-  "completedChallenges": 0,
-  "averageScore": 0,
-  "completionPercentage": 0,
-  "badgeLevel": "none",
-  "challengeResults": [],
-  "skillStrengths": [],
+  "completedChallenges": 23,
+  "averageScore": 85.1,
+  "completionPercentage": 100,
+  "badgeLevel": "silver",
+  "challengeResults": [
+    {
+      "challengeId": "01-static-task-display",
+      "challengeName": "Static Task Display",
+      "score": 92.5,
+      "passed": true
+    },
+    {
+      "challengeId": "02-dynamic-task-rendering",
+      "challengeName": "Dynamic Task Rendering",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "03-adding-new-tasks",
+      "challengeName": "Adding New Tasks",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "04-task-completion-toggle",
+      "challengeName": "Task Completion Toggle",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "05-task-deletion",
+      "challengeName": "Task Deletion",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "06-task-filtering",
+      "challengeName": "Task Filtering",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "07-priority-based-sorting",
+      "challengeName": "Priority-Based Sorting",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "08-task-editing",
+      "challengeName": "Task Editing",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "09-search-functionality",
+      "challengeName": "Search Functionality",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "10-useeffect-local-storage",
+      "challengeName": "useEffect - Local Storage Persistence",
+      "score": 80,
+      "passed": true
+    },
+    {
+      "challengeId": "11-useeffect-debounced-search",
+      "challengeName": "useEffect - Debounced Search",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "12-categories-and-tags",
+      "challengeName": "Categories and Tags",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "13-due-dates-and-sorting",
+      "challengeName": "Due Dates and Sorting",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "14-task-statistics-dashboard",
+      "challengeName": "Task Statistics Dashboard",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "15-component-organization",
+      "challengeName": "Component Organization with Props",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "16-context-api-theme",
+      "challengeName": "Context API - Theme Management",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "17-custom-hook-uselocalstorage",
+      "challengeName": "Custom Hook - useLocalStorage",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "18-usereducer-complex-state",
+      "challengeName": "useReducer - Complex State Management",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "19-performance-optimization",
+      "challengeName": "Performance Optimization",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "20-error-boundaries",
+      "challengeName": "Error Boundaries and Error Handling",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "21-react-router",
+      "challengeName": "React Router - Routing and Navigation",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "22-data-fetching",
+      "challengeName": "Data Fetching - Loading and Error State",
+      "score": 85,
+      "passed": true
+    },
+    {
+      "challengeId": "23-useref-focus-management",
+      "challengeName": "useRef - Focus Management",
+      "score": 85,
+      "passed": true
+    }
+  ],
+  "skillStrengths": [
+    "Static Task Display",
+    "Dynamic Task Rendering",
+    "Adding New Tasks",
+    "Task Completion Toggle",
+    "Task Deletion",
+    "Task Filtering",
+    "Priority-Based Sorting",
+    "Task Editing",
+    "Search Functionality",
+    "useEffect - Local Storage Persistence",
+    "useEffect - Debounced Search",
+    "Categories and Tags",
+    "Due Dates and Sorting",
+    "Task Statistics Dashboard",
+    "Component Organization with Props",
+    "Context API - Theme Management",
+    "Custom Hook - useLocalStorage",
+    "useReducer - Complex State Management",
+    "Performance Optimization",
+    "Error Boundaries and Error Handling",
+    "React Router - Routing and Navigation",
+    "Data Fetching - Loading and Error State",
+    "useRef - Focus Management"
+  ],
   "improvementAreas": []
 }

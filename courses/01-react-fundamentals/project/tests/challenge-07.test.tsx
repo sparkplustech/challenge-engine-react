@@ -1,7 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import FilterBar from '../src/components/FilterBar';
 import TaskList from '../src/components/TaskList';
+import TaskApp from '../src/components/TaskApp';
+
+const getTaskTitles = () =>
+  screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent);
 
 describe('Challenge 07: Priority-Based Sorting', () => {
   const UNSORTED = [
@@ -31,5 +36,52 @@ describe('Challenge 07: Priority-Based Sorting', () => {
     render(<TaskList tasks={highToLow} countText="3 Tasks" />);
     const cards = screen.getAllByRole('heading', { level: 2 });
     expect(cards[0]).toHaveTextContent('High');
+  });
+
+  it('sort control orders priority high to low, then low to high', async () => {
+    const user = userEvent.setup();
+    render(<TaskApp tasks={UNSORTED} showFilterBar />);
+    const sortOrder = screen.getByRole('combobox', { name: /sort by/i });
+
+    await act(async () => user.selectOptions(sortOrder, 'priority-desc'));
+    expect(getTaskTitles()).toEqual(['High', 'Medium', 'Low']);
+
+    await act(async () => user.selectOptions(sortOrder, 'priority-asc'));
+    expect(getTaskTitles()).toEqual(['Low', 'Medium', 'High']);
+  });
+
+  it('sorts alphabetically without case sensitivity and preserves source order for Recently Added', async () => {
+    const user = userEvent.setup();
+    const tasks = [
+      { ...UNSORTED[0], title: 'zebra' },
+      { ...UNSORTED[1], title: 'apple' },
+      { ...UNSORTED[2], title: 'Banana' },
+    ];
+    const originalOrder = tasks.map((task) => task.title);
+    render(<TaskApp tasks={tasks} showFilterBar />);
+    const sortOrder = screen.getByRole('combobox', { name: /sort by/i });
+
+    await act(async () => user.selectOptions(sortOrder, 'alphabetical'));
+    expect(getTaskTitles()).toEqual(['apple', 'Banana', 'zebra']);
+    expect(tasks.map((task) => task.title)).toEqual(originalOrder);
+
+    await act(async () => user.selectOptions(sortOrder, 'recent'));
+    expect(getTaskTitles()).toEqual(originalOrder);
+  });
+
+  it('sorts only the tasks matching the selected filter', async () => {
+    const user = userEvent.setup();
+    const tasks = [
+      { ...UNSORTED[0], title: 'Low active', completed: false },
+      { ...UNSORTED[1], title: 'High completed', completed: true },
+      { ...UNSORTED[2], title: 'Medium active', completed: false },
+    ];
+    render(<TaskApp tasks={tasks} showFilterBar />);
+
+    await act(async () => user.click(screen.getByRole('button', { name: 'Active' })));
+    await act(async () =>
+      user.selectOptions(screen.getByRole('combobox', { name: /sort by/i }), 'priority-desc'),
+    );
+    expect(getTaskTitles()).toEqual(['Medium active', 'Low active']);
   });
 });

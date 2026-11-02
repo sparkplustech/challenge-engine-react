@@ -3,7 +3,7 @@
 /**
  * AI Review Layer for Next.js App Router Course
  * 
- * Uses Groq API (Llama 3.1 8B) to provide qualitative code review
+ * Uses Groq API (GPT-OSS 20B) to provide qualitative code review
  */
 
 import { readFileSync, existsSync } from 'fs';
@@ -28,7 +28,7 @@ if (existsSync(envPath)) {
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL = 'llama-3.1-8b-instant';
+const MODEL = 'openai/gpt-oss-20b';
 
 /**
  * Reviews code using AI for qualitative feedback
