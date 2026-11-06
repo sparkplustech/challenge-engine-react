@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
-import { ThemeContext } from '../contexts/theme-context'
+import { ThemeContext } from '../contexts/ThemeContext'
 
 const challenges = [
   { id: '01-static-task-display', name: 'Static Task Display', route: '/challenge/01-static-task-display' },

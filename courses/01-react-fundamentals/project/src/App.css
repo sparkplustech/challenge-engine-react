@@ -1,64 +1,15 @@
 .App {
-  --app-background: #fff;
-  --app-text: #111;
-  --surface-background: #fff;
-  --control-background: #fff;
-  --muted-background: #f0f0f0;
-  --border-color: #ddd;
-
   padding: 1rem;
-  min-height: 100vh;
-  color: var(--app-text);
-  background: var(--app-background);
-}
-
-.App[data-theme='dark'] {
-  --app-background: #15171a;
-  --app-text: #f3f4f6;
-  --surface-background: #202328;
-  --control-background: #292d33;
-  --muted-background: #292d33;
-  --border-color: #4b5563;
-}
-
-.app-header {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
+  color: #111;
+  background: #fff;
 }
 
 .App code {
-  background: var(--muted-background);
+  background: #f0f0f0;
   padding: 0.1em 0.3em;
   border-radius: 2px;
   font-size: 0.9em;
-  color: var(--app-text);
-}
-
-.App input,
-.App textarea,
-.App select {
-  color: var(--app-text);
-  background: var(--control-background);
-  border: 1px solid var(--border-color);
-}
-
-.App button {
-  color: var(--app-text);
-  background: var(--control-background);
-  border: 1px solid var(--border-color);
-}
-
-.App button.button--primary {
-  color: #fff;
-  background: #2563eb;
-  border-color: #2563eb;
-}
-
-.App button.button--danger {
-  color: #fff;
-  background: #dc2626;
-  border-color: #dc2626;
+  color: #111;
 }
 
 #task-list {
@@ -68,9 +19,7 @@
 }
 
 #task-card {
-  color: var(--app-text);
-  background: var(--surface-background);
-  border: 1px solid var(--border-color);
+  border: 1px solid #ddd;
   border-radius: 6px;
   padding: 1rem;
 }
