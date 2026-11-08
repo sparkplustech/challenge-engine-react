@@ -23,6 +23,7 @@ import { checkArchitecture } from './architecture-checker.js';
 import { checkBestPractices } from './best-practices.js';
 import { reviewCodeWithAI } from '../ai-review/index.js';
 import { generateCourseSummary } from '../../../global-review/course-summary-generator.js';
+import { applyPassFallback } from '../../../global-review/pass-fallback.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -351,6 +352,12 @@ async function reviewChallenge(challenge, config) {
     );
 
     result.passed = result.totalScore >= config.requirements.minScore;
+
+    // Functional tests passed but one of E2E/architecture failed along with AI review: reweight so the learner passes
+    if (applyPassFallback(result, config)) {
+      console.log(`\n🛟 Fallback pass: ${result.fallback.reason}`);
+      console.log(`   Score: ${result.fallback.originalScore.toFixed(1)}% → ${result.totalScore.toFixed(1)}%${result.fallback.raisedToMinimum ? ' (raised to minimum)' : ''}`);
+    }
 
   } catch (error) {
     result.errors.push(error.message);

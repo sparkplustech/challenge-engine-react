@@ -160,11 +160,18 @@ app.get('/api/courses/:courseId/challenges', (req, res) => {
   const progress = getProgress();
   const courseChallenges = progress?.courses?.[req.params.courseId]?.challenges || {};
   const courseId = req.params.courseId;
+  // progress.json has no fallback info, so take it from the course's results
+  const fallbackById = new Map(
+    getChallengeResults(courseId)
+      .filter(r => r.fallback?.applied)
+      .map(r => [r.challengeId, r.fallback])
+  );
   const withProgress = slice.map(c => ({
     ...c,
     passed: courseChallenges[c.id]?.passed,
     score: courseChallenges[c.id]?.score,
     lastRun: courseChallenges[c.id]?.lastRun,
+    fallback: fallbackById.get(c.id) || null,
   }));
   res.json({
     challenges: withProgress,
