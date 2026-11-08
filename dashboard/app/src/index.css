@@ -119,6 +119,8 @@ body { margin: 0; background: #fff; }
 .card .badge.failed { background: #fee2e2; color: #991b1b; }
 .card .badge.pending { background: #f3f4f6; color: var(--text-muted); }
 .badge i { margin-right: 0.35em; }
+.badge.fallback { background: #fef3c7; color: #92400e; margin-left: 0.4rem; cursor: help; }
+.card .badge.fallback { padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 500; }
 .detail-panel .badge.passed { background: #dcfce7; color: #166534; }
 .detail-panel .badge.failed { background: #fee2e2; color: #991b1b; }
 .detail-panel .badge.pending { background: #f3f4f6; color: var(--text-muted); }
