@@ -3,7 +3,7 @@
 /**
  * AI Review Layer for Next.js App Router Course
  * 
- * Uses Groq API (GPT-OSS 20B) to provide qualitative code review
+ * Uses Groq API (Llama 3.1 8B) to provide qualitative code review
  */
 
 import { readFileSync, existsSync } from 'fs';
