@@ -12,6 +12,7 @@
     "test:ai-review": "node scripts/test-ai-review.js",
     "e2e": "node scripts/e2e-test.js",
     "setup": "node scripts/setup.js",
+    "reset:workspace": "node scripts/reset-workspace.js",
     "sync-upstream": "node scripts/pull-upstream.js",
     "test": "echo \"Run tests in individual course projects\"",
     "dashboard": "cd dashboard && node server.js",

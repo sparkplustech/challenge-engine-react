@@ -67,6 +67,16 @@ type Course = {
   completionPercentage?: number;
 };
 
+/** Set by global-review/pass-fallback.js when a learner passed through the fallback */
+type PassFallback = {
+  applied: boolean;
+  reason: string;
+  excluded: string[];
+  originalScore: number;
+  reweightedScore: number;
+  raisedToMinimum: boolean;
+};
+
 type Challenge = {
   id: string;
   name: string;
@@ -75,12 +85,14 @@ type Challenge = {
   score?: number;
   lastRun?: string | null;
   skills?: string[];
+  fallback?: PassFallback | null;
 };
 
 /** Review result from challenge-results.json – full per-layer data */
 type ReviewResult = {
   totalScore?: number;
   passed?: boolean;
+  fallback?: PassFallback;
   scores?: Record<string, number>;
   testResults?: {
     score: number;
@@ -137,6 +149,20 @@ type ChallengeDetail = Challenge & {
 };
 
 type ChallengeFilter = 'all' | 'passed' | 'not-passed';
+
+function fallbackTooltip(fallback: PassFallback): string {
+  const raised = fallback.raisedToMinimum ? ', raised to the 80% minimum' : '';
+  return `${fallback.reason}. Original score ${Math.round(fallback.originalScore)}%${raised}.`;
+}
+
+function FallbackBadge({ fallback }: { fallback?: PassFallback | null }) {
+  if (!fallback?.applied) return null;
+  return (
+    <span className="badge fallback" title={fallbackTooltip(fallback)}>
+      <i className="fa-solid fa-life-ring" aria-hidden /> Fallback pass
+    </span>
+  );
+}
 
 export default function App() {
   const [progress, setProgress] = useState<Progress | null>(null);
@@ -669,6 +695,7 @@ export default function App() {
                             <span className={`badge ${ch.passed ? 'passed' : ch.score != null ? 'failed' : 'pending'}`}>
                               {ch.passed ? <><i className="fa-solid fa-check" aria-hidden /> Passed</> : ch.score != null ? <><i className="fa-solid fa-xmark" aria-hidden /> Not passed</> : <><i className="fa-regular fa-circle" aria-hidden /> Not run</>}
                             </span>
+                            {ch.passed && <FallbackBadge fallback={ch.fallback} />}
                             {score != null && ` · Score: ${score}%`}
                             {ch.lastRun && ` · Last run: ${new Date(ch.lastRun).toLocaleString()}`}
                           </div>
@@ -762,6 +789,7 @@ export default function App() {
                 <span className={`badge ${detail.passed ? 'passed' : detail.score != null ? 'failed' : 'pending'}`}>
                   {detail.passed ? <><i className="fa-solid fa-check" aria-hidden /> Passed</> : detail.score != null ? <><i className="fa-solid fa-xmark" aria-hidden /> Not passed</> : <><i className="fa-regular fa-circle" aria-hidden /> Not run</>}
                 </span>
+                {detail.passed && <FallbackBadge fallback={detail.result?.fallback} />}
                 {detail.score != null && <span className="detail-score">Score: {Math.round(detail.score)}%</span>}
                 {detail.lastRun && (
                   <span className="detail-score">Last run: {new Date(detail.lastRun).toLocaleString()}</span>
@@ -857,6 +885,12 @@ export default function App() {
                     {detail.result.passed ? 'Yes' : 'No'}
                   </span>
                 </div>
+                {detail.result.fallback?.applied && (
+                  <div className="results-summary-row">
+                    <strong>Fallback pass</strong>
+                    <span>{fallbackTooltip(detail.result.fallback)}</span>
+                  </div>
+                )}
               </div>
 
               {(() => {

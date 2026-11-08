@@ -1,6 +1,7 @@
 'use client';
 
 import './ChallengeList.css';
+import Link from 'next/link';
 
 /**
  * Challenge List Component for Next.js Course
@@ -41,14 +42,14 @@ export default function ChallengeList() {
             </div>
             <p className="challenge-description">{challenge.description}</p>
             <div className="challenge-actions">
-              <a
-                href={`./challenges/${challenge.id}/README.md`}
+              <Link
+                href={`/challenges/${challenge.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary"
               >
                 View Challenge
-              </a>
+              </Link>
             </div>
           </div>
         ))}

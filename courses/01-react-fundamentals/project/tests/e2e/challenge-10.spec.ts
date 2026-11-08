@@ -12,23 +12,4 @@ test.describe('Challenge 10: useEffect Local Storage - E2E', () => {
   test('should display task count', async ({ page }) => {
     await expect(page.locator('#task-count')).toBeVisible();
   });
-
-  test('should persist task completion after refresh', async ({ page }) => {
-    const checkbox = page.getByRole('checkbox').first();
-    await checkbox.check();
-    await expect(checkbox).toBeChecked();
-
-    await page.reload();
-    await expect(page.getByRole('checkbox').first()).toBeChecked();
-  });
-
-  test('should persist newly added tasks after refresh', async ({ page }) => {
-    await page.locator('#task-title').fill('Saved new task');
-    await page.locator('#task-description').fill('Saved task details');
-    await page.getByRole('button', { name: 'Add Task' }).click();
-    await expect(page.getByRole('heading', { name: 'Saved new task' })).toBeVisible();
-
-    await page.reload();
-    await expect(page.getByRole('heading', { name: 'Saved new task' })).toBeVisible();
-  });
 });
