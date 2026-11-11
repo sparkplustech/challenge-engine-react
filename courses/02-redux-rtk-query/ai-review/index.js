@@ -3,7 +3,7 @@
 /**
  * AI Review Layer for RTK Query Course
  * 
- * Uses Groq API (Llama 3.1 8B) to provide qualitative code review
+ * Uses Groq API (GPT-OSS 20B) to provide qualitative code review
  * 
  * IMPORTANT: This review only runs if functional tests pass.
  * It receives:
@@ -35,10 +35,18 @@ if (existsSync(envPath)) {
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL = 'llama-3.1-8b-instant';
+const MODEL = 'openai/gpt-oss-20b';
 
 // File extensions to include in code review
 const CODE_EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx'];
+
+// Groq counts prompt + max_tokens against the 8000 tokens-per-minute limit, so these two must fit together
+const MAX_CODE_CHARS = 14000; // Total code sent to the model (about 3500 tokens)
+const MAX_COMPLETION_TOKENS = 2000; // Includes the model's hidden reasoning, not just the answer
+
+const MAX_ATTEMPTS = 3;
+const DEFAULT_RETRY_WAIT_MS = 10000;
+const MAX_RETRY_WAIT_MS = 90000; // Longer waits mean a daily quota, not a per-minute one
 
 /**
  * Reviews code using AI for qualitative feedback
@@ -118,6 +126,8 @@ export async function reviewCodeWithAI(challengeId, challengeMetadata, projectDi
       };
     }
 
+    const { includedFiles, omittedFiles } = limitCodeContext(codeFiles);
+
     // 4. Check if API key is available
     if (!GROQ_API_KEY) {
       return {
@@ -133,8 +143,9 @@ export async function reviewCodeWithAI(challengeId, challengeMetadata, projectDi
       challengeMetadata,
       challengeInstructions,
       challengeRequirements,
-      codeFiles,
-      missingFiles
+      includedFiles,
+      missingFiles,
+      omittedFiles
     );
 
     // 6. Call Groq API
@@ -153,9 +164,33 @@ export async function reviewCodeWithAI(challengeId, challengeMetadata, projectDi
     return {
       ...results,
       error: error.message,
-      score: 0
+      score: 0,
+      skipped: true
     };
   }
+}
+
+/**
+ * Keep code within MAX_CODE_CHARS. filesToCheck come first in codeFiles, so discovered files are dropped first.
+ */
+function limitCodeContext(codeFiles) {
+  const includedFiles = [];
+  const omittedFiles = [];
+  let remaining = MAX_CODE_CHARS;
+
+  for (const file of codeFiles) {
+    if (remaining <= 0) {
+      omittedFiles.push(file.file);
+      continue;
+    }
+    if (file.content.length > remaining) {
+      omittedFiles.push(`${file.file} (partially)`);
+    }
+    includedFiles.push({ ...file, content: file.content.substring(0, remaining) });
+    remaining -= file.content.length;
+  }
+
+  return { includedFiles, omittedFiles };
 }
 
 /**
@@ -207,7 +242,7 @@ function discoverAdditionalFiles(challengeMetadata, projectDir) {
 /**
  * Build sophisticated review prompt with all context
  */
-function buildReviewPrompt(challengeId, challengeMetadata, instructions, requirements, codeFiles, missingFiles) {
+function buildReviewPrompt(challengeId, challengeMetadata, instructions, requirements, codeFiles, missingFiles, omittedFiles) {
   const challengeName = challengeMetadata.challengeName || challengeId;
   const skills = challengeMetadata.skills || [];
   const patternsRequired = challengeMetadata.patternsRequired || [];
@@ -220,6 +255,11 @@ function buildReviewPrompt(challengeId, challengeMetadata, instructions, require
   // Build missing files note
   const missingFilesNote = missingFiles.length > 0
     ? `\n\n⚠️ NOTE: The following expected files are missing: ${missingFiles.join(', ')}. This may indicate incomplete implementation.`
+    : '';
+
+  // Omitted files exist, so the model must not treat them as missing or incomplete
+  const omittedFilesNote = omittedFiles.length > 0
+    ? `\n\nNOTE: To fit the size limit, these files exist but were not shown: ${omittedFiles.join(', ')}. Do not count them as missing or incomplete.`
     : '';
 
   // Build requirements summary
@@ -243,7 +283,7 @@ function buildReviewPrompt(challengeId, challengeMetadata, instructions, require
 
 The following code files were created/modified by the user for this challenge:
 
-${codeContext}${missingFilesNote}
+${codeContext}${missingFilesNote}${omittedFilesNote}
 
 ## Review Task:
 
@@ -290,41 +330,76 @@ Be specific in your feedback. Reference specific files and code patterns. Focus 
  * Call Groq API
  */
 async function callGroqAPI(prompt) {
-  const response = await fetch(GROQ_API_URL, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${GROQ_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      messages: [
-        {
-          role: 'system',
-          content: 'You are an expert RTK Query, Redux Toolkit, and TypeScript code reviewer. Provide detailed, specific, actionable feedback. Reference specific files and code patterns in your feedback.'
-        },
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      temperature: 0.3,
-      max_tokens: 1500 // Increased for more detailed feedback
-    })
-  });
+  let lastError;
 
-  const data = await response.json().catch(() => ({}));
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const response = await fetch(GROQ_API_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${GROQ_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are an expert RTK Query, Redux Toolkit, and TypeScript code reviewer. Provide detailed, specific, actionable feedback. Reference specific files and code patterns in your feedback.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.3,
+        max_tokens: MAX_COMPLETION_TOKENS,
+        reasoning_effort: 'low', // Leave the token budget for the answer
+        response_format: { type: 'json_object' }
+      })
+    });
 
-  if (!response.ok) {
-    const msg = data?.error?.message || data?.error || response.statusText;
-    throw new Error(`Groq API error (${response.status}): ${msg}`);
+    const data = await response.json().catch(() => ({}));
+
+    if (response.status === 429) {
+      const waitMs = getRetryWaitMs(response, data);
+      lastError = new Error(`Groq API error (429): ${data?.error?.message || response.statusText}`);
+      if (waitMs > MAX_RETRY_WAIT_MS) throw lastError;
+      if (attempt < MAX_ATTEMPTS) await new Promise(resolve => setTimeout(resolve, waitMs));
+      continue;
+    }
+
+    if (!response.ok) {
+      const msg = data?.error?.message || data?.error || response.statusText;
+      lastError = new Error(`Groq API error (${response.status}): ${msg}`);
+      if (data?.error?.code === 'json_validate_failed') continue; // Model produced invalid JSON
+      throw lastError;
+    }
+
+    const choice = data?.choices?.[0];
+    if (choice?.finish_reason === 'length') {
+      lastError = new Error(`AI response was cut off at ${MAX_COMPLETION_TOKENS} tokens. AI review skipped.`);
+      continue;
+    }
+
+    const content = choice?.message?.content;
+    if (content == null || typeof content !== 'string') {
+      throw new Error('Groq API returned no content (check model/response shape)');
+    }
+    return content;
   }
 
-  const content = data?.choices?.[0]?.message?.content;
-  if (content == null || typeof content !== 'string') {
-    throw new Error('Groq API returned no content (check model/response shape)');
-  }
-  return content;
+  throw lastError;
+}
+
+/**
+ * How long Groq asked us to wait: retry-after header first, then the error message
+ */
+function getRetryWaitMs(response, data) {
+  const retryAfter = Number(response.headers.get('retry-after'));
+  if (retryAfter > 0) return retryAfter * 1000 + 1000;
+
+  const match = String(data?.error?.message || '').match(/try again in (\d+(?:\.\d+)?)s/i);
+  return match ? Math.ceil(parseFloat(match[1]) * 1000) + 1000 : DEFAULT_RETRY_WAIT_MS;
 }
 
 /**
@@ -350,14 +425,19 @@ function parseAIResponse(response) {
   }
 
   // Fallback: extract information manually
-  const readabilityMatch = response.match(/readability[:\s]+(\d+)/i);
-  const maintainabilityMatch = response.match(/maintainability[:\s]+(\d+)/i);
-  const complianceMatch = response.match(/requirementCompliance[:\s]+(\d+)/i);
+  const readabilityMatch = response.match(/"?readability"?\s*:?\s*(\d+)/i);
+  const maintainabilityMatch = response.match(/"?maintainability"?\s*:?\s*(\d+)/i);
+  const complianceMatch = response.match(/"?requirementCompliance"?\s*:?\s*(\d+)/i);
+
+  // A guessed score would be misleading, so report the review as failed instead
+  if (!readabilityMatch || !maintainabilityMatch || !complianceMatch) {
+    throw new Error('Could not read scores from the AI response. AI review skipped.');
+  }
 
   return {
-    readability: readabilityMatch ? parseInt(readabilityMatch[1]) : 0,
-    maintainability: maintainabilityMatch ? parseInt(maintainabilityMatch[1]) : 0,
-    requirementCompliance: complianceMatch ? parseInt(complianceMatch[1]) : 0,
+    readability: parseInt(readabilityMatch[1]),
+    maintainability: parseInt(maintainabilityMatch[1]),
+    requirementCompliance: parseInt(complianceMatch[1]),
     strengths: extractList(response, /strengths?/i),
     improvements: extractList(response, /improvements?/i),
     overall: response.substring(0, 500)

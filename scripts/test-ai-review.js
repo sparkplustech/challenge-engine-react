@@ -27,7 +27,7 @@ if (existsSync(envPath)) {
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL = 'llama-3.1-8b-instant';
+const MODEL = 'openai/gpt-oss-20b';
 
 async function testConnection() {
   console.log('Testing AI review (Groq API) connection...\n');
@@ -50,7 +50,7 @@ async function testConnection() {
         messages: [
           { role: 'user', content: 'Reply with exactly: OK' }
         ],
-        max_tokens: 10
+        max_tokens: 256
       })
     });
 
@@ -66,7 +66,7 @@ async function testConnection() {
     }
 
     const content = data?.choices?.[0]?.message?.content;
-    if (content == null) {
+    if (typeof content !== 'string' || !content.trim()) {
       console.log('❌ Groq API returned no content.');
       process.exit(1);
     }

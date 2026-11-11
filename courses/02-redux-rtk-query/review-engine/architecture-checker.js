@@ -6,15 +6,36 @@ import traverse from '@babel/traverse';
 /**
  * File-specific pattern rules
  */
-function getFileSpecificPatterns(file) {
+function getFileSpecificPatterns(file, challengeId) {
+  const normalizedFile = file.replace(/\\/g, "/");
+
+  if (challengeId === "07-queries") {
+    if (normalizedFile.endsWith("src/api/apiSlice.ts")) {
+      return ["builder.query"];
+    }
+    if (normalizedFile.endsWith("src/components/UsersList.tsx")) {
+      return ["useGetUsersQuery"];
+    }
+  }
   if (file.includes("api/usersApi")) {
     return ["createApi", "fetchBaseQuery", "endpoints"];
   }
-  if (file.includes("store")) {
-    return ["reducer", "middleware"];
+  if (normalizedFile.endsWith("src/store/store.ts")) {
+    return challengeId === "06-rtk-query-setup"
+      ? ["reducer", "middleware"]
+      : ["reducer"];
   }
-  if (file.includes("UsersList")) {
-    return ["useQueryHook"];
+  if (
+    challengeId === "03-reading-dispatching" &&
+    normalizedFile.endsWith("src/store/hooks.ts")
+  ) {
+    return ["useSelector", "useDispatch"];
+  }
+  if (
+    challengeId === "12-error-loading-ux" &&
+    normalizedFile.endsWith("src/components/UsersList.tsx")
+  ) {
+    return ["isLoading", "isError", "refetch"];
   }
   if (file.includes("main") || file.includes("index")) {
     return ["Provider"];
@@ -41,7 +62,10 @@ export async function checkArchitecture(challengeMetadata, projectDir) {
 
   for (const file of filesToCheck) {
     const filePath = join(projectDir, file);
-    const patternsRequired = getFileSpecificPatterns(file);
+    const patternsRequired = getFileSpecificPatterns(
+      file,
+      challengeMetadata.challengeId
+    );
 
     if (!existsSync(filePath)) {
       results.details.push({
